@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<pds>
+    <bg src="Main.png"/>
+    <objects>
+        <circle-marker desc="" id="IED1" x="417" y="236" ip="192.168.0.110" ch="0"/>
+        <circle-marker desc="" id="IED1" x="582" y="400" ip="192.168.0.110" ch="3"/>
+        <circle-marker desc="" id="IED1" x="498" y="401" ip="192.168.0.110" ch="2"/>
+        <circle-marker desc="" id="IED1" x="324" y="403" ip="192.166.0.110" ch="1"/>
+    </objects>
+</pds>

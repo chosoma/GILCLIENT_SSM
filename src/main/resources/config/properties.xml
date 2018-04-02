@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<property> 
+  <!--采集-->  
+  <collection> 
+    <commDelay wait="30000" space="20000" reply="10000" timeout="300000"/>  
+    <!--预热-->  
+    <fixed preheat="80000"/>  
+    <!-- 报警：声音-->  
+    <warning voice="false"/>  
+    <!-- 温度频率-->  
+    <wdPeriod wd1="40" wd2="50" jg1="20" jg2="1"/> 
+  </collection>  
+  <!--通讯-->  
+  <communication> 
+    <!--GPRS/CDMA-->  
+    <GPRS addr="" localport="8088"/>  
+    <!--<GPRS addr="" localport="8080"/>--> 
+  </communication>  
+  <!--数据库-->  
+  <!--<database ip="118.89.103.234" port="3306" dbname="gil"/>-->
+  <database ip="localhost" port="3306" dbname="gil"/>
+  <start jflib="jf.exe"/> 
+</property>
