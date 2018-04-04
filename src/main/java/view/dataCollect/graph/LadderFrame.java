@@ -270,7 +270,7 @@ public class LadderFrame extends JFrame {
             UnitBean unit = entry.getKey();
             List<DataBean> dataBeans = entry.getValue();
             TimeSeries timeSeries;
-            if (unit.isInittemp()) {
+            if (unit.isIsinit()) {
                 timeSeries = new TimeSeries("环境温度");
             } else {
                 if (unit.getType() == 3) {

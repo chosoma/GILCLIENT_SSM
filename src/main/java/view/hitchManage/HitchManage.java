@@ -4,6 +4,7 @@ import domain.*;
 import model.DataManageModel;
 import model.DataModel_Hitch;
 import mytools.*;
+import protocol.Protocol;
 import service.*;
 import util.MyExcelUtil;
 import view.icon.MyIconFactory;
@@ -281,7 +282,7 @@ public class HitchManage extends JPanel {
                     @Override
                     public void run() {
                         try {
-                            CountBean countBean = HitchService.getTableDataCount(para);
+                            CountBean countBean = DataManageService.getTableDataCount(para);
                             pageBean.setCount(countBean.getCount());
                             jlendpage.setText(String.valueOf(pageBean.getEndpage()));
                         } catch (SQLException e) {
@@ -327,8 +328,8 @@ public class HitchManage extends JPanel {
 //                int[] ids = new int[selRows.length];
 
                 try {
-                    java.util.Map<HitchUnitBean, java.util.List<Date>> warnBeanDateMap = getSelectTable();
-                    HitchService.deleteData(warnBeanDateMap);
+                    java.util.Map<UnitBean, java.util.List<Date>> warnBeanDateMap = getSelectTable();
+                    DataManageService.deleteData(warnBeanDateMap);
 
                     JOptionPane.showMessageDialog(null, "故障信息已成功删除", "提示",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -376,9 +377,9 @@ public class HitchManage extends JPanel {
 //                }
 
                 try {
-                    java.util.Map<HitchUnitBean, java.util.List<Date>> hitchUnitBeanListMap = getAllTable();
+                    java.util.Map<UnitBean, java.util.List<Date>> hitchUnitBeanListMap = getAllTable();
 
-                    HitchService.deleteData(hitchUnitBeanListMap);
+                    DataManageService.deleteData(hitchUnitBeanListMap);
 
                     JOptionPane.showMessageDialog(null, "故障信息已成功清空", "提示",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -440,14 +441,15 @@ public class HitchManage extends JPanel {
         toolBarR.add(print);
     }
 
-    private java.util.Map<HitchUnitBean, java.util.List<Date>> getSelectTable() {
+    private java.util.Map<UnitBean, java.util.List<Date>> getSelectTable() {
         int[] selRows = table.getSelectedRows();
-        java.util.Map<HitchUnitBean, java.util.List<Date>> hitchBeanListHashMap = new HashMap<>();
+        java.util.Map<UnitBean, java.util.List<Date>> hitchBeanListHashMap = new HashMap<>();
         for (int selRow : selRows) {
             String place = (String) table.getValueAt(selRow, 0);
             String xw = (String) table.getValueAt(selRow, 1);
             Date date = (Date) table.getValueAt(selRow, 4);
-            HitchUnitBean hitchBean = HitchUnitService.getUnit(place, xw);
+            PointBean pointBean = PointService.getUnitPoint(place);
+            UnitBean hitchBean =UnitService.getUnit(pointBean.getPoint(), xw);
             if (hitchBeanListHashMap.containsKey(hitchBean)) {
                 hitchBeanListHashMap.get(hitchBean).add(date);
             } else {
@@ -459,14 +461,15 @@ public class HitchManage extends JPanel {
         return hitchBeanListHashMap;
     }
 
-    private java.util.Map<HitchUnitBean, java.util.List<Date>> getAllTable() {
+    private java.util.Map<UnitBean, java.util.List<Date>> getAllTable() {
         int rowCount = table.getRowCount();
-        java.util.Map<HitchUnitBean, java.util.List<Date>> hitchBeanListHashMap = new HashMap<>();
+        java.util.Map<UnitBean, java.util.List<Date>> hitchBeanListHashMap = new HashMap<>();
         for (int i = 0; i < rowCount; i++) {
             String place = (String) table.getValueAt(i, 0);
             String xw = (String) table.getValueAt(i, 1);
             Date date = (Date) table.getValueAt(i, 4);
-            HitchUnitBean hitchBean = HitchUnitService.getUnit(place, xw);
+            PointBean pointBean = PointService.getUnitPoint(place);
+            UnitBean hitchBean =UnitService.getUnit(pointBean.getPoint(), xw);
             if (hitchBeanListHashMap.containsKey(hitchBean)) {
                 hitchBeanListHashMap.get(hitchBean).add(date);
             } else {
@@ -486,7 +489,7 @@ public class HitchManage extends JPanel {
             getSearchConditon();
             DataManageModel model = DataModel_Hitch.getInstance();
             table.setModel(model);
-            java.util.List<Vector<Object>> datas = HitchService.getTableData(para, pageBean);
+            java.util.List<Vector<Object>> datas = DataManageService.getTableData(para, pageBean);
             model.addDatas(datas);
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -545,6 +548,7 @@ public class HitchManage extends JPanel {
     private void getSearchConditon() throws Exception {
         para = new DataSearchPara();
         para.setType("故障");
+        para.setUnitType(Protocol.UnitTypeHV);
         int sjbhIdenx = jcbPlace.getSelectedIndex();
         String place = null;
 
@@ -562,8 +566,8 @@ public class HitchManage extends JPanel {
             xw = (String) jcbXW.getSelectedItem();
             para.setXw(xw);
         }
-        List<HitchUnitBean> hitchUnitBeans = HitchUnitService.getUnits(place, xw);
-        para.setHitchunits(hitchUnitBeans);
+        List<UnitBean> hitchUnits = UnitService.getUnit(place, xw);
+        para.setUnits(hitchUnits);
 //        HitchUnitBean hitchUnitBean = HitchUnitService.getUnit(place, xw);
 //        if (hitchUnitBean != null) {
 //            para.setUnitNumber(hitchUnitBean.getNumber());
@@ -578,7 +582,7 @@ public class HitchManage extends JPanel {
     }
 
     private void refreshSJBH() {
-        Vector<String> sjbhs = HitchUnitService.getPlaces();
+        Vector<String> sjbhs = UnitService.getHitchPlaces();
         jcbPlace.removeAllItems();
         if (sjbhs.size() > 0) {
             jcbPlace.addItem("全部");

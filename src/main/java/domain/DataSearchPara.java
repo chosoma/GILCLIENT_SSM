@@ -9,15 +9,15 @@ public class DataSearchPara {
     private Byte unitType, unitNumber;//编号
     private Date t1, t2;
     private List<UnitBean> units;
-    private List<HitchUnitBean> hitchunits;
+//    private List<HitchUnitBean> hitchunits;
 
-    public List<HitchUnitBean> getHitchunits() {
-        return hitchunits;
-    }
+//    public List<HitchUnitBean> getHitchunits() {
+//        return hitchunits;
+//    }
 
-    public void setHitchunits(List<HitchUnitBean> hitchunits) {
-        this.hitchunits = hitchunits;
-    }
+//    public void setHitchunits(List<HitchUnitBean> hitchunits) {
+//        this.hitchunits = hitchunits;
+//    }
 
     public Byte getUnitType() {
         return unitType;

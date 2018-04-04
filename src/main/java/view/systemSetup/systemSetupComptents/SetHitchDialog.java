@@ -1,11 +1,11 @@
 package view.systemSetup.systemSetupComptents;
 
 import data.FormatTransfer;
-import domain.HitchUnitBean;
 import domain.HitchVolLevelBean;
+import domain.UnitBean;
 import mytools.ClickButton;
-import service.HitchUnitService;
 import service.HitchVolLevelService;
+import service.UnitService;
 import view.icon.CloseIcon;
 
 import javax.swing.*;
@@ -14,12 +14,12 @@ import java.awt.event.*;
 import java.sql.SQLException;
 
 public class SetHitchDialog extends JDialog {
-    private HitchUnitBean hitchUnitBean;
+    private UnitBean hitchUnitBean;
 
     private Point lastPoint;
 
 
-    public SetHitchDialog(HitchUnitBean hitchUnitBean) {
+    public SetHitchDialog(UnitBean hitchUnitBean) {
         this.hitchUnitBean = hitchUnitBean;
         this.level = hitchUnitBean.getVollevel();
         this.vol = hitchUnitBean.getVolwarn();
@@ -168,7 +168,7 @@ public class SetHitchDialog extends JDialog {
     private void setPerameter() throws SQLException {
         hitchUnitBean.setVollevel(level);
         hitchUnitBean.setVolwarn(vol);
-        HitchUnitService.updateHitchUnit(hitchUnitBean);
+        UnitService.updateWarning(hitchUnitBean);
     }
 
 //    private static Insets textFieldInsets = new Insets(0, 0, 0, 5);
@@ -209,7 +209,6 @@ public class SetHitchDialog extends JDialog {
         gbc.gridx++;
         gbc.gridwidth = 2;
         gbl.setConstraints(jlbxw, gbc);
-
 
 
         gbc.gridy = 2;
@@ -330,6 +329,11 @@ public class SetHitchDialog extends JDialog {
         centerPanel.setSize(200, 150);
         this.getContentPane().add(centerPanel, BorderLayout.CENTER);
         return centerPanel.getSize();
+    }
+
+    private void setPeriod() {
+
+
     }
 
     private boolean plusflag, subflag, tflag = true;

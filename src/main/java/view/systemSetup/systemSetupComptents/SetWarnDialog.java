@@ -1,7 +1,10 @@
 package view.systemSetup.systemSetupComptents;
 
+import data.FormatTransfer;
+import domain.HitchVolLevelBean;
 import domain.UnitBean;
 import mytools.ClickButton;
+import service.HitchVolLevelService;
 import service.UnitService;
 import view.icon.CloseIcon;
 
@@ -16,9 +19,10 @@ public class SetWarnDialog extends JDialog {
     private Point lastPoint;
 
 
-
     public SetWarnDialog(UnitBean unit) {
         unitBean = unit;
+
+        System.out.println(unit);
         initDefault();
     }
 
@@ -76,7 +80,7 @@ public class SetWarnDialog extends JDialog {
         headRight.setOpaque(false);
         headPane.add(headRight, BorderLayout.EAST);
 
-        JButton close = new JButton(new CloseIcon());
+        final JButton close = new JButton(new CloseIcon());
         close.setToolTipText("关闭");
         close.setFocusable(false);
         // 无边框
@@ -119,6 +123,7 @@ public class SetWarnDialog extends JDialog {
                     return;
                 }
                 dispose();
+                close();
             }
         });
         bottomPane.add(buttonSave);
@@ -158,6 +163,9 @@ public class SetWarnDialog extends JDialog {
                 break;
             case 3:
                 indexx = 3;
+                break;
+            case 4:
+                indexx = 5;
                 break;
         }
 
@@ -264,7 +272,7 @@ public class SetWarnDialog extends JDialog {
             if (unitBean != null && unitBean.getWarnTemp() != null) {
                 jtftemp.setText(String.valueOf(unitBean.getWarnTemp()));
             }
-        } else {
+        } else if (unitBean.getType() == 2) {
             gbc.gridy = 2;
             gbc.gridx = 0;
             gbc.gridwidth = 1;
@@ -294,11 +302,168 @@ public class SetWarnDialog extends JDialog {
             if (unitBean != null && unitBean.getMinvari() != null) {
                 jtfvarimin.setText(String.valueOf(unitBean.getMinvari()));
             }
+        } else {
+            initlevel();
+            this.level = unitBean.getVollevel();
+            this.vol = unitBean.getVolwarn();
+
+            gbc.gridy = 2;
+            gbc.gridx = 0;
+            gbc.gridwidth = 1;
+            JLabel warnlevel = new JLabel("报警等级:", JLabel.CENTER);
+            centerPanel.add(warnlevel);
+            gbl.setConstraints(warnlevel, gbc);
+            gbc.gridy++;
+            final JLabel warnvalue = new JLabel("报警值:", JLabel.CENTER);
+            centerPanel.add(warnvalue);
+            gbl.setConstraints(warnvalue, gbc);
+
+            gbc.gridx++;
+            gbc.gridy = 2;
+            gbc.gridwidth = 2;
+            final JComboBox<Byte> warnlevels = new JComboBox<>(HitchVolLevelService.getLevels());
+            warnlevels.setSelectedItem(level);
+            centerPanel.add(warnlevels);
+            gbl.setConstraints(warnlevels, gbc);
+            gbc.gridy++;
+            final JLabel warnvalues = new JLabel(String.valueOf(vol), JLabel.CENTER);
+            gbl.setConstraints(warnvalues, gbc);
+            centerPanel.add(warnvalues);
+
+            final ItemListener itemListener = new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    vol = HitchVolLevelService.getValue((Byte) warnlevels.getSelectedItem());
+                    level = (Byte) warnlevels.getSelectedItem();
+                    warnvalues.setText(String.valueOf(vol));
+                }
+            };
+            warnlevels.addItemListener(itemListener);
+
+            gbc.gridy = 4;
+            gbc.gridx = 0;
+            gbc.gridwidth = 1;
+            Thread tsub = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (tflag) {
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        ItemListener[] itemListeners = warnlevels.getItemListeners();
+                        boolean itemflag = true;
+                        for (ItemListener item : itemListeners) {
+                            if (item == itemListener) {
+                                itemflag = false;
+                            }
+                        }
+                        if (subflag) {
+                            if (!itemflag) {
+                                warnlevels.removeItemListener(itemListener);
+                            }
+                            sub();
+                            warnvalues.setText(String.valueOf(vol));
+                            checkPlusLevel();
+                            warnlevels.setSelectedItem(level);
+                        } else if (plusflag) {
+                            if (!itemflag) {
+                                warnlevels.removeItemListener(itemListener);
+                            }
+                            plus();
+                            warnvalues.setText(String.valueOf(vol));
+                            checkPlusLevel();
+                            warnlevels.setSelectedItem(level);
+                        } else {
+                            if (itemflag) {
+                                warnlevels.addItemListener(itemListener);
+                            }
+                        }
+                    }
+                }
+            });
+            tsub.start();
+            JButton jbsub = new JButton("-");
+            jbsub.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    subflag = true;
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    subflag = false;
+                }
+            });
+            gbl.setConstraints(jbsub, gbc);
+            centerPanel.add(jbsub);
+
+            gbc.gridx++;
+
+            JButton jbplus = new JButton("+");
+            jbplus.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    plusflag = true;
+//                hitchUnitBean.plus();
+//                warnvalues.setText(String.valueOf(hitchUnitBean.getVolwarn()));
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    plusflag = false;
+                }
+            });
+            gbl.setConstraints(jbplus, gbc);
+            centerPanel.add(jbplus);
         }
         centerPanel.setLayout(gbl);
 
         centerPanel.setSize(200, indexx * 30);
         return centerPanel;
+    }
+
+    private boolean plusflag, subflag, tflag = true;
+    private float[] hitchVolLevelBeans;
+
+    private void initlevel() {
+        java.util.List<HitchVolLevelBean> hitchVolLevelBeanList = HitchVolLevelService.getHitchVolLevels();
+        hitchVolLevelBeans = new float[10];
+        for (int i = 0; i < hitchVolLevelBeans.length; i++) {
+            for (HitchVolLevelBean vollevel : hitchVolLevelBeanList) {
+                if (vollevel.getLevel() == i + 1) {
+                    hitchVolLevelBeans[i] = vollevel.getVol();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void checkPlusLevel() {
+        for (byte i = 0; i < hitchVolLevelBeans.length; i++) {
+            if (this.vol < hitchVolLevelBeans[i]) {
+                level = i;
+                return;
+            }
+        }
+    }
+
+    private byte level;
+    private float vol;
+
+    private void sub() {
+        this.vol = FormatTransfer.newScale(vol, 0.1f);
+        if (vol < 0) {
+            vol = 0;
+        }
+    }
+
+    private void plus() {
+        this.vol = FormatTransfer.newScale(vol, -0.1f);
     }
 
     private void setPerameter() throws NumberFormatException, SQLException {
@@ -310,8 +475,6 @@ public class SetWarnDialog extends JDialog {
             if (!unit.equals(this.unitBean)) {
                 continue;
             }
-
-
             switch (unit.getType()) {
                 case 1:
                     if (jtfdenmax != null) {
@@ -360,11 +523,22 @@ public class SetWarnDialog extends JDialog {
                         throw new NumberFormatException();
                     }
                     break;
+                case 4:
+                    unit.setVollevel(level);
+                    unitBean.setVollevel(level);
+                    unit.setVolwarn(vol);
+                    unitBean.setVolwarn(vol);
+                    break;
             }
             UnitService.updateWarning(unit);
 
         }
     }
 
+    private void close() {
+        tflag = false;
+//        tplus.interrupt();
+//        tsub.interrupt();
+    }
 
 }

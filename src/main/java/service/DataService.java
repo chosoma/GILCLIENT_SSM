@@ -18,11 +18,11 @@ public class DataService {
         String datatable = DataBaseAttr.DataTable;
         String validtable = DataBaseAttr.DataValidTable;
         sqlInsert = " insert into " + datatable
-                + " (unittype,unitnumber,den,pres,temp,vari,batlv,date)"
-                + " values ( ?,?,?,?,?,?,?,?)";
+                + " (unittype,unitnumber,den,pres,temp,vari,hitchvol,batlv,date)"
+                + " values ( ?,?,?,?,?,?,?,?,?)";
         sqlValidInsert = " insert into " + validtable
-                + " (unittype,unitnumber,den,pres,temp,vari,batlv,date)"
-                + " values ( ?,?,?,?,?,?,?,?)";
+                + " (unittype,unitnumber,den,pres,temp,vari,hitchvol,batlv,date)"
+                + " values ( ?,?,?,?,?,?,?,?,?)";
 
     }
 
@@ -69,7 +69,7 @@ public class DataService {
                 "from data d , unit u " +
                 "where d.unittype = u.type " +
                 "and d.unitnumber = u.number " +
-                "and u.inittemp = 1 order by d.date desc limit 1 ";
+                "and u.number = (select number from unit_temp where isinit = 1) order by d.date desc limit 1 ";
         return MyDbUtil.queryBeanData(sql, DataBean.class);
     }
 
@@ -115,7 +115,7 @@ public class DataService {
                 "    FROM\n" +
                 "      ((( data  d\n" +
                 "        JOIN  " + DataBaseAttr.UnitTable + "  u)\n" +
-                "        JOIN  " + DataBaseAttr.NetTable + "  g)\n" +
+                "        JOIN  " + DataBaseAttr.GATEWAYTable + "  g)\n" +
                 "        JOIN  " + DataBaseAttr.PointTable + "  p)\n" +
                 "    WHERE\n" +
                 "      (( d . unittype  =  u . type )\n" +

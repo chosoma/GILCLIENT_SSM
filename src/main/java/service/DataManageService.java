@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import domain.*;
+import protocol.Protocol;
 import util.MyDbUtil;
 
 public class DataManageService {
@@ -14,22 +15,39 @@ public class DataManageService {
         stringBuilder.append("case when p.place is NULL then '环境温度' else p.place end AS place,");
         stringBuilder.append("u.xw AS xw,");
         switch (para.getUnitType()) {
-            case 1:
-                stringBuilder.append("i.den AS den,\n").append("i.pres AS pres,");
+            case Protocol.UnitTypeSF6:
+                stringBuilder.append("i.den AS den,").append("i.pres AS pres,");
                 break;
-            case 2:
-                stringBuilder.append("i.vari-u.initvari AS vari,");
+            case Protocol.UnitTypeSSJ:
+                stringBuilder.append("i.vari-us.initvari AS vari,");
                 break;
-            case 3:
+            case Protocol.UnitTypeWD:
                 stringBuilder.append("i.temp AS temp,");
+                break;
+            case Protocol.UnitTypeHV:
+                stringBuilder.append("i.hitchvol AS hitchvol,");
                 break;
         }
         stringBuilder.append(" i.BatLv AS batlv,").append(" i.date");
         stringBuilder.append(" FROM ").append(DataBaseAttr.UnitTable).append(" u ");
         stringBuilder.append("LEFT JOIN ").append(DataBaseAttr.DataTable).append(" i ON u.type = i.unittype AND u.number = i.unitnumber ");
         stringBuilder.append("LEFT JOIN ").append(DataBaseAttr.PointTable).append(" p ON p.point = u.point ");
+        switch (para.getUnitType()) {
+            case Protocol.UnitTypeSF6:
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitSF6Table).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeSF6);
+                break;
+            case Protocol.UnitTypeSSJ:
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitVariTable).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeSSJ);
+                break;
+            case Protocol.UnitTypeWD:
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitTempTable).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeWD);
+                break;
+            case Protocol.UnitTypeHV:
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitHitchTable).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeHV);
+                break;
+        }
         ArrayList<Object> p = new ArrayList<Object>();
-        stringBuilder.append("WHERE u.type = ? ");
+        stringBuilder.append(" WHERE u.type = ? ");
         p.add(para.getUnitType());
         List<UnitBean> units = para.getUnits();
         if (units != null && units.size() > 0) {

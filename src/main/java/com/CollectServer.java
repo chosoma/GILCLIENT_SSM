@@ -79,7 +79,7 @@ public class CollectServer {
             try {
                 st.close();
             } catch (IOException e) {
-                
+
                 e.printStackTrace();
             }
         }
@@ -136,14 +136,18 @@ public class CollectServer {
         return listST.size() == 0;
     }
 
-    public void applyOffline(byte unitType, Byte unitNumber, byte jg) {
+
+    /*
+        server-client设置采集周期
+     */
+    public void applyUnitOffline(byte unitType, Byte unitNumber, byte jg) {
         if (unitNumber == null) {
             Vector<UnitBean> beans = UnitService.getUnitBeans(unitType);
             if (beans.size() <= 0) {
                 return;
             }
             for (UnitBean unitBean : beans) {
-                applyOffline(unitType, unitBean.getNumber(), jg);
+                applyUnitOffline(unitType, unitBean.getNumber(), jg);
             }
         } else {
             UnitBean unitBean = UnitService.getUnitBean(unitType, unitNumber);
@@ -167,4 +171,7 @@ public class CollectServer {
             }
         }
     }
+
+
+
 }

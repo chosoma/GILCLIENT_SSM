@@ -13,7 +13,6 @@ import view.dataCollect.datacollect.CollectShow;
 
 public class DataFactory {
     private List<DataBean> dataList = new ArrayList<DataBean>();
-    private List<HitchBean> hitchList = new ArrayList<HitchBean>();
     private CollectShow show = CollectShow.getInstance();
 
     private DataFactory() {
@@ -36,14 +35,14 @@ public class DataFactory {
                 e.printStackTrace();
             }
         }
-        if (hitchList.size() > 0) {
-            try {
-                HitchService.save(hitchList);
-                hitchList.clear();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (hitchList.size() > 0) {
+//            try {
+//                HitchService.save(hitchList);
+//                hitchList.clear();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public void processData_X(byte[] data, Date time) {
@@ -75,77 +74,78 @@ public class DataFactory {
                 off += 4;
                 float dy = data[off] / 10.0f;
 
-                if (unitType == 4) {
-                    HitchBean hitchBean = new HitchBean();
-                    hitchBean.setUnittype(unitType);
-                    hitchBean.setUnitnumber(unitNumber);
-                    Float f3 = FormatTransfer.bytesL2Float2(bytes3);
-                    System.out.println("f3:" + f3);
-                    hitchBean.setVol(f3);
-                    hitchBean.setDate(time);
-                    hitchBean.setBatlv(dy);
-                    show.checkHitch(hitchBean);
-                    if (!hitchList.contains(hitchBean)) {
-                        hitchList.add(hitchBean);
-                    }
-                } else {
-                    DataBean databean = new DataBean();
-                    databean.setDate(time);// 时间
-                    databean.setUnitType(unitType);
-                    databean.setUnitNumber(unitNumber);
-                    UnitBean unit = unitPacket.getUnit(unitType, unitNumber);
+//                if (unitType == 4) {
+//                    HitchBean hitchBean = new HitchBean();
+//                    hitchBean.setUnittype(unitType);
+//                    hitchBean.setUnitnumber(unitNumber);
+//                    Float f3 = FormatTransfer.bytesL2Float2(bytes3);
+//                    System.out.println("f3:" + f3);
+//                    hitchBean.setHitchvol(f3);
+//                    hitchBean.setDate(time);
+//                    hitchBean.setBatlv(dy);
+//                    show.checkHitch(hitchBean);
+//                    if (!hitchList.contains(hitchBean)) {
+//                        hitchList.add(hitchBean);
+//                    }
+//                } else {
+                DataBean databean = new DataBean();
+                databean.setDate(time);// 时间
+                databean.setUnitType(unitType);
+                databean.setUnitNumber(unitNumber);
+                UnitBean unit = unitPacket.getUnit(unitType, unitNumber);
+                if (unit == null) {
+                    unit = UnitService.getUnitBean(unitType, unitNumber);
                     if (unit == null) {
-                        unit = UnitService.getUnitBean(unitType, unitNumber);
-                        if (unit == null) {
-                            System.out.println("单元不存在");
-                            continue;
-                        }
+                        System.out.println("单元不存在");
+                        continue;
                     }
-                    databean.setBatlv(dy);// 电量
-                    if (unitType == Protocol.UnitTypeSF6) {// ----SF6单元
-
-                        if (bytes3[0] == 1) {
-                            databean.setLowPres(true);
-                        }
-                        if (bytes3[1] == 1) {
-                            databean.setLowLock(true);
-                        }
-
-                        boolean flag = valueSF6(bytes1, databean);//true 数据无效 false 数据有效
-
-                        if (flag && !databean.isLowLock() && !databean.isLowPres()) {
-                            DataService.saveValidCollData(databean);
-                            continue;
-                        }
-                    } else if (unitType == Protocol.UnitTypeSSJ) {
-                        boolean flag = valueVari(bytes3, databean);
-                        if (flag) {
-                            DataService.saveValidCollData(databean);
-                            continue;
-                        }
-                    } else if (unitType == Protocol.UnitTypeWD) {//温度
-
-                        Float f3 = FormatTransfer.bytesL2Float2(bytes3);
-                        if (unit.isInittemp()) {
-                            databean.setTemp(f3);
-                            show.receInitTemp(databean);
-                            dataList.add(databean);
-                            continue;
-                        }
-                        float amtemp = AbcUnitView.getAmtemp();
-                        float temp = FormatTransfer.newScale(f3, amtemp);
-                        if (temp < 0) {
-                            temp = 0;
-                        }
-                        databean.setTemp(temp);
-                    }
-                    checkData(databean);
-
-                    dataList.add(databean);
-                    System.out.println(dataList);
-
-                    show.receData(databean, true);
                 }
+                databean.setBatlv(dy);// 电量
+                if (unitType == Protocol.UnitTypeSF6) {// ----SF6单元
+
+                    if (bytes3[0] == 1) {
+                        databean.setLowPres(true);
+                    }
+                    if (bytes3[1] == 1) {
+                        databean.setLowLock(true);
+                    }
+
+                    boolean flag = valueSF6(bytes1, databean);//true 数据无效 false 数据有效
+
+                    if (flag && !databean.isLowLock() && !databean.isLowPres()) {
+                        DataService.saveValidCollData(databean);
+                        continue;
+                    }
+                } else if (unitType == Protocol.UnitTypeSSJ) {
+                    boolean flag = valueVari(bytes3, databean);
+                    if (flag) {
+                        DataService.saveValidCollData(databean);
+                        continue;
+                    }
+                } else if (unitType == Protocol.UnitTypeWD) {//温度
+                    Float f3 = FormatTransfer.bytesL2Float2(bytes3);
+                    if (unit.isIsinit()) {
+                        databean.setTemp(f3);
+                        show.receInitTemp(databean);
+                        dataList.add(databean);
+                        continue;
+                    }
+                    float amtemp = AbcUnitView.getAmtemp();
+                    float temp = FormatTransfer.newScale(f3, amtemp);
+                    if (temp < 0) {
+                        temp = 0;
+                    }
+                    databean.setTemp(temp);
+                } else if (unitType == Protocol.UnitTypeHV) {
+                    Float f3 = FormatTransfer.bytesL2Float2(bytes3);
+                    databean.setHitchvol(f3);
+                }
+                checkData(databean);
+
+                dataList.add(databean);
+
+                show.receData(databean, true);
+//                }
             } catch (SQLException e) {
                 System.out.println("数据库连接异常");
                 e.printStackTrace();

@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
 
-import domain.UnitBean;
+import domain.*;
 import protocol.Protocol;
 import service.CollectService;
 import service.NetService;
@@ -15,9 +15,6 @@ import util.MyDecodeUitl;
 import view.debugs.Debugs;
 import data.DataBuffer;
 import data.FormatTransfer;
-import domain.NetBean;
-import domain.RawData;
-import domain.WdPeriod;
 
 
 public class CollectSocket implements Runnable {
@@ -47,7 +44,7 @@ public class CollectSocket implements Runnable {
             InputStream in = socket.getInputStream();
             out = socket.getOutputStream();
             byte[] b = new byte[1024];
-            int num ;
+            int num;
             while ((num = in.read(b)) != -1) {
 //                System.out.println("接受数据:" + num);
                 Date time = Calendar.getInstance().getTime();
@@ -142,14 +139,11 @@ public class CollectSocket implements Runnable {
     void setJg(UnitBean unitBean, byte jg) throws IOException {
         System.out.println("设置参数");
         byte[] msg;
-        if (unitBean.getType() == Protocol.UnitTypeWD) {
-            msg = getSetJgWd(unitBean, jg);
-        } else {
-            msg = getSetJg(unitBean, jg);
-        }
+        msg = getSetJg(unitBean, jg);
         sendMSG(msg);
 
     }
+
 
     void setAlarm(byte time) throws IOException {
         sendMSG(getAlarm(time));
@@ -224,37 +218,25 @@ public class CollectSocket implements Runnable {
             b[9] = 0x01;
         }
         b[10] = jg;
-        FormatTransfer.calcCRC16_X(b);// CRC16
-        return MyDecodeUitl.Encryption(b);
-    }
-
-    private byte[] getSetJgWd(UnitBean unitBean, byte jg) {
-        // 7E 03 00 02 B1 00 0C 00 03 01 00 1E 1E 50 14 64 0A 00 00 7F 0A 7D
-        byte[] b = new byte[20];
-        b[0] = getNetType();
-        b[1] = getNetID();
-        b[2] = Protocol.cmdSetT;
-        b[3] = Protocol.cmdSetIDR;
-        b[4] = 0x00;
-        b[5] = Protocol.LenSetWDT;
-        b[6] = 0x00;
-        b[7] = unitBean.getType();
-        b[8] = unitBean.getNumber();
-        NetBean netBean = NetService.getNetBean(unitBean.getGatewaytype(), unitBean.getGatewaynumber());
-        if (netBean != null) {
-            b[9] = netBean.getChannel();
-        } else {
-            b[9] = 0x01;
+        switch (unitBean.getType()) {
+            case Protocol.UnitTypeWD:
+                b[11] = jg;
+                WdPeriod wdPeriod = Configure.getWdPeriod();
+                b[12] = wdPeriod.getWd1();
+                b[13] = wdPeriod.getJg1();
+                b[14] = wdPeriod.getWd2();
+                b[15] = wdPeriod.getJg2();
+                b[16] = 0;
+                b[17] = 0;
+                break;
+            case Protocol.UnitTypeHV:
+                byte[] bytes = FormatTransfer.float2Bytes(unitBean.getVolwarn());
+//                System.out.println(Arrays.toString(bytes));
+//                System.out.println(unitBean);
+                System.arraycopy(bytes, 0, b, 11, bytes.length);
+                break;
         }
-        b[10] = jg;
-        b[11] = jg;
-        WdPeriod wdPeriod = Configure.getWdPeriod();
-        b[12] = wdPeriod.getWd1();
-        b[13] = wdPeriod.getJg1();
-        b[14] = wdPeriod.getWd2();
-        b[15] = wdPeriod.getJg2();
-        b[16] = 0;
-        b[17] = 0;
+
         FormatTransfer.calcCRC16_X(b);// CRC16
         return MyDecodeUitl.Encryption(b);
     }

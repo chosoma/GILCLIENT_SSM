@@ -1,8 +1,8 @@
 package view.dataCollect.hitch;
 
-import domain.HitchBean;
-import domain.HitchUnitBean;
+import domain.DataBean;
 import domain.PointBean;
+import domain.UnitBean;
 import domain.WarnBean;
 import view.Shell;
 import view.dataCollect.WarnPanel;
@@ -18,7 +18,7 @@ public class HitchABCLabel extends JPanel {
 
     private PointBean pointBean;
 
-    private java.util.List<HitchUnitBean> hitchUnitBeanList;
+    private java.util.List<UnitBean> hitchUnitBeanList;
 
     public HitchABCLabel(PointBean pointBean) {
         this.pointBean = pointBean;
@@ -54,12 +54,12 @@ public class HitchABCLabel extends JPanel {
         this.add(center, BorderLayout.CENTER);
     }
 
-    public void checkHitch(HitchBean hitchBean) {
-        for (HitchUnitBean unitbean :
+    public void checkHitch(DataBean hitchBean) {
+        for (UnitBean unitbean :
                 hitchUnitBeanList) {
-            if (hitchBean.getUnitnumber() == unitbean.getNumber()) {
+            if (hitchBean.getUnitNumber() == unitbean.getNumber()) {
                 String str;
-                if (hitchBean.getVol() >= unitbean.getVolwarn()) {
+                if (hitchBean.getHitchvol() >= unitbean.getVolwarn()) {
                     str = "故障";
                     WarnBean warnBean = new WarnBean();
                     warnBean.setPointBean(pointBean);
@@ -101,7 +101,7 @@ public class HitchABCLabel extends JPanel {
         }
     }
 
-    public void addHitchUnit(HitchUnitBean unitBean) {
+    public void addHitchUnit(UnitBean unitBean) {
         this.hitchUnitBeanList.add(unitBean);
     }
 

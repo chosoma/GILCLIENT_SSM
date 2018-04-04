@@ -1,8 +1,5 @@
 package domain;
 
-import data.FormatTransfer;
-import service.UnitService;
-
 import java.util.Date;
 import java.util.Vector;
 
@@ -10,11 +7,18 @@ public class DataBean {
     private int id;
     private String place, xw;
     private byte gatewayType, gatewayNumber, unitType, unitNumber;
-    private float pres, temp, den, vari, batlv;
+    private float pres, temp, den, vari, batlv, hitchvol;
     private Date date;
     private int point;
     private boolean lowPres, lowLock;
 
+    public float getHitchvol() {
+        return hitchvol;
+    }
+
+    public void setHitchvol(float hitchvol) {
+        this.hitchvol = hitchvol;
+    }
 
     public String getXw() {
         return xw;
@@ -172,6 +176,7 @@ public class DataBean {
         data.add(pres);
         data.add(temp);
         data.add(vari);
+        data.add(hitchvol);
         data.add(batlv);
         data.add(date);
         return data;

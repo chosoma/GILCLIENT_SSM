@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Vector;
 
 import domain.DataSearchPara;
+import protocol.Protocol;
 import util.MyDbUtil;
 
 import domain.DataBaseAttr;
@@ -28,6 +29,19 @@ public class UnitService {
         return null;
     }
 
+    public static Vector<String> getHitchPlaces() {
+        Vector<String> vector = new Vector<>();
+        for (UnitBean unit : unitList) {
+            if (unit.getType() != Protocol.UnitTypeHV) {
+                continue;
+            }
+            if (!vector.contains(unit.getPlace())) {
+                vector.add(unit.getPlace());
+            }
+        }
+        return vector;
+    }
+
 
     public static Vector<UnitBean> getUnitBeans(byte type) {
         Vector<UnitBean> beans = new Vector<UnitBean>();
@@ -39,9 +53,17 @@ public class UnitService {
         return beans;
     }
 
+    public static void refresh(UnitBean hitchUnitBean) {
+        for (UnitBean unit : unitList) {
+            if (hitchUnitBean.getPoint() == unit.getPoint()) {
+                unit.setPlace(hitchUnitBean.getPlace());
+            }
+        }
+    }
+
     public static UnitBean getInitTempUnit() {
         for (UnitBean unit : unitList) {
-            if (unit.isInittemp()) {
+            if (unit.isIsinit()) {
                 return unit;
             }
         }
@@ -100,23 +122,44 @@ public class UnitService {
         return units;
     }
 
+
     /**
      * 获取采集单元信息
      *
      * @return
      * @throws SQLException
      */
+
     public static void init() throws SQLException {
-        String sql = "select " +
-                "type , number , gatewaytype, gatewaynumber, " +
-                "period, inittemp, initvari, minvari, maxvari, maxden, minden, maxper, minper, warntemp, xw, u.point, p.place " +
-                "from " + DataBaseAttr.UnitTable + " u , " + DataBaseAttr.PointTable + " p " +
-                "where u.point = p.point  ";
-        unitList = MyDbUtil.queryBeanListData(sql, UnitBean.class);
-        String sql2 = "select * " +
-                "from " + DataBaseAttr.UnitTable + " u " +
-                "where u.inittemp = 1 ";
-        unitList.addAll(MyDbUtil.queryBeanListData(sql2, UnitBean.class));
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("select u.type,u.number,u.gatewaytype,u.gatewaynumber,u.period," +
+                " ut.isinit,ut.warntemp," +
+                " ur.initvari,ur.minvari,ur.maxvari," +
+                " us.maxden,us.minden,us.maxper,us.minper,us.warntemp as sf6temp," +
+                " uh.vollevel,uh.volwarn,uh.x,uh.y," +
+                " u.xw,u.point,p.place");
+        sqlBuilder.append(" from " + DataBaseAttr.UnitTable + " u" +
+                " left join " + DataBaseAttr.PointTable + " p on u.point = p.point" +
+                " left join " + DataBaseAttr.GATEWAYTable + " g on u.gatewaytype = g.type and u.gatewaynumber = g.number" +
+                " left join " + DataBaseAttr.UnitSF6Table + " us on u.number = us.number and u.type = " + Protocol.UnitTypeSF6 +
+                " left join " + DataBaseAttr.UnitVariTable + " ur on u.number = ur.number and u.type = " + Protocol.UnitTypeSSJ +
+                " left join " + DataBaseAttr.UnitTempTable + " ut on u.number = ut.number and u.type = " + Protocol.UnitTypeWD +
+                " left join " + DataBaseAttr.UnitHitchTable + " uh on u.number = uh.number and u.type = " + Protocol.UnitTypeHV);
+
+
+        unitList = MyDbUtil.queryBeanListData(sqlBuilder.toString(), UnitBean.class);
+
+//        String sql = "select " +
+//                "type , number , gatewaytype, gatewaynumber, " +
+//                "period, inittemp, initvari, minvari, maxvari, maxden, minden, maxper, minper, warntemp, xw, u.point, p.place " +
+//                "from " + DataBaseAttr.UnitTable + " u , " + DataBaseAttr.PointTable + " p " +
+//                "where u.point = p.point  ";
+//        unitList = MyDbUtil.queryBeanListData(sql, UnitBean.class);
+//        String sql2 = "select * " +
+//                "from " + DataBaseAttr.UnitTable + " u " +
+//                "where u.inittemp = 1 ";
+//        unitList.addAll(MyDbUtil.queryBeanListData(sql2, UnitBean.class));
 //        for (UnitBean unit :
 //                unitList) {
 //            System.out.println(unit);
@@ -127,24 +170,34 @@ public class UnitService {
 
     public static void updateInitvari(UnitBean bean) throws SQLException {
         String sql = "update "
-                + DataBaseAttr.UnitTable
+                + DataBaseAttr.UnitVariTable
                 + " set initvari = ? "
-                + " where type = ? and number = ? ; ";
-        MyDbUtil.update(sql, bean.getInitvari(), bean.getType(), bean.getNumber());
+                + " where number = ? ; ";
+        MyDbUtil.update(sql, bean.getInitvari(), bean.getNumber());
     }
 
     public static void updateWarning(UnitBean bean) throws SQLException {
-        String sql = "update "
-                + DataBaseAttr.UnitTable
-                + " set maxden = ? ,"
-                + "  minden = ? ,"
-                + "  maxper = ? ,"
-                + "  minper = ? ,"
-                + "  maxvari = ? ,"
-                + "  minvari = ? ,"
-                + "  warntemp = ? "
-                + " where type = ? and number = ? ; ";
-        MyDbUtil.update(sql, bean.getMaxden(), bean.getMinden(), bean.getMaxper(), bean.getMinper(), bean.getMaxvari(), bean.getMinvari(), bean.getWarnTemp(), bean.getType(), bean.getNumber());
+        StringBuilder sqlBuilder = new StringBuilder("update ");
+        switch (bean.getType()) {
+            case Protocol.UnitTypeSF6:
+                sqlBuilder.append(DataBaseAttr.UnitSF6Table);
+                sqlBuilder.append(" set maxden = ? , minden = ? , maxper = ? , minper = ? , warntemp = ? ");
+                break;
+            case Protocol.UnitTypeSSJ:
+                sqlBuilder.append(DataBaseAttr.UnitVariTable);
+                sqlBuilder.append(" set maxvari = ? , minvari = ? ");
+                break;
+            case Protocol.UnitTypeWD:
+                sqlBuilder.append(DataBaseAttr.UnitTempTable);
+                sqlBuilder.append(" set warntemp = ? ");
+                break;
+            case Protocol.UnitTypeHV:
+                sqlBuilder.append(DataBaseAttr.UnitHitchTable);
+                sqlBuilder.append(" set vollevel = ? , volwarn = ? ");
+                break;
+        }
+        sqlBuilder.append(" where number = ? ");
+        MyDbUtil.update(sqlBuilder.toString(), bean.getProper().toArray());
     }
 
 

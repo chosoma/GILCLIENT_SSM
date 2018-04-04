@@ -1,8 +1,8 @@
 package view.dataCollect.hitch;
 
 
-import domain.HitchBean;
-import domain.HitchUnitBean;
+import domain.DataBean;
+import domain.UnitBean;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +14,12 @@ import java.awt.event.MouseEvent;
  */
 public class HitchABCPanel extends JPanel {
 
-    private HitchUnitBean unit;
+    private UnitBean unit;
 
 
     private JLabel showLabel;
 
-    public HitchABCPanel(HitchUnitBean unit) {
+    public HitchABCPanel(UnitBean unit) {
         this.unit = unit;
         this.setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -36,8 +36,8 @@ public class HitchABCPanel extends JPanel {
         setInfo("无报警");
     }
 
-    public void setInfo(HitchBean hitchBean) {
-        setInfo(String.valueOf(hitchBean.getVol()));
+    public void setInfo(DataBean hitchBean) {
+        setInfo(String.valueOf(hitchBean.getHitchvol()));
     }
 
     public void setInfo(String string) {

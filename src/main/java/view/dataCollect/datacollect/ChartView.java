@@ -100,9 +100,6 @@ public class ChartView extends JPanel {
         panelGraph.alignZero(unit);
     }
 
-    public void checkHitch(HitchBean hitchBean) {
-        panelHitch.checkHitch(hitchBean);
-    }
 
     public void receDatas(boolean flag, DataBean... datas) {
         List<DataBean> dataBeans = new ArrayList<DataBean>();
@@ -126,6 +123,9 @@ public class ChartView extends JPanel {
                     break;
                 case 3:
                     panelWd.addData(data, flag);
+                    break;
+                case 4:
+                    panelHitch.checkHitch(data);
                     break;
             }
             panelGraph.addData(data);

@@ -35,7 +35,6 @@ public class FormatTransfer {
     }
 
 
-
     private static int bytes2Int(byte b[]) {
         return bytes2Int(b, 0, b.length);
     }
@@ -77,6 +76,17 @@ public class FormatTransfer {
         BigDecimal bd = new BigDecimal(f);
         return bd.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
     }
+
+    public static byte[] float2Bytes(float f) {
+        byte[] bytes = new byte[4];
+        int i = Float.floatToIntBits(f);
+//        System.out.println(i);
+        for (int j = 0; j < bytes.length; j++) {
+            bytes[j] = (byte) ((i >> (j * 8)) & 0xff);
+        }
+        return bytes;
+    }
+
 
     private static final String HEXES = "0123456789ABCDEF";
 

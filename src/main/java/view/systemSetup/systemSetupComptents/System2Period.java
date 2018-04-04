@@ -220,6 +220,7 @@ public class System2Period extends JPanel {
     }
 
     public void refreshPeriod() {
+
         String place = (String) jcbPlace.getSelectedItem();
         String xw = (String) jcbXW.getSelectedItem();
         if ("环境温度".equals(place)) {
@@ -228,16 +229,19 @@ public class System2Period extends JPanel {
             if (amtempUnit == null) {
                 return;
             }
-            jlPrimaryPeriod.setText(String.valueOf(amtempUnit.getPeriod()&0xff));
+            jlPrimaryPeriod.setText(String.valueOf(amtempUnit.getPeriod() & 0xff));
         } else {
-            if (lock) {
+            if (edit.isEnabled()) {
+                jcbPlace.setEnabled(false);
+                jcbXW.setEnabled(false);
+            } else if (lock) {
                 jcbXW.setEnabled(true);
             }
             List<UnitBean> unitBeans = UnitService.getUnit(place, xw);
             if (unitBeans.size() == 0) {
                 return;
             }
-            jlPrimaryPeriod.setText(String.valueOf(unitBeans.get(0).getPeriod()&0xff));
+            jlPrimaryPeriod.setText(String.valueOf(unitBeans.get(0).getPeriod() & 0xff));
         }
     }
 

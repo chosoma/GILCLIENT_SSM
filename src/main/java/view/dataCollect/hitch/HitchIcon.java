@@ -1,23 +1,21 @@
 package view.dataCollect.hitch;
 
-import domain.HitchBean;
-import domain.HitchUnitBean;
+import domain.DataBean;
+import domain.UnitBean;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 /**
  * 故障图标
  */
 public class HitchIcon extends JLabel {
-    private HitchUnitBean hitchUnitBean;
+    private UnitBean hitchUnitBean;
     private HitchABCPanel hitchInfoPanel;//鼠标悬停时的显示页面
     private HitchIconLabel hitchIconLabel;
 
 
-    public HitchIcon(HitchUnitBean hitchUnitBean, HitchIconLabel hitchIconLabel) {
+    public HitchIcon(UnitBean hitchUnitBean, HitchIconLabel hitchIconLabel) {
         this.hitchInfoPanel = new HitchABCPanel(hitchUnitBean);
         this.hitchUnitBean = hitchUnitBean;
         this.hitchIconLabel = hitchIconLabel;
@@ -32,7 +30,7 @@ public class HitchIcon extends JLabel {
         return hitchInfoPanel;
     }
 
-    public HitchUnitBean getHitchUnitBean() {
+    public UnitBean getHitchUnitBean() {
         return hitchUnitBean;
     }
 
@@ -56,16 +54,16 @@ public class HitchIcon extends JLabel {
         this.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource("icon/hitcherror.png")));
     }
 
-    boolean checkUnit(HitchBean hitchBean) { //true 报警, false 未报警
-        if (hitchUnitBean.getNumber() == hitchBean.getUnitnumber()) {
-            if (hitchBean.getVol() >= hitchUnitBean.getVolwarn()) {
+    boolean checkUnit(DataBean hitchBean) { //true 报警, false 未报警
+        if (hitchUnitBean.getNumber() == hitchBean.getUnitNumber()) {
+            if (hitchBean.getHitchvol() >= hitchUnitBean.getVolwarn()) {
                 setError();
                 return true;
-            } else if (hitchBean.getVol() >= hitchUnitBean.getVolwarn() * 0.9) {
+            } else if (hitchBean.getHitchvol() >= hitchUnitBean.getVolwarn() * 0.9) {
                 setWarn();
                 return false;
             } else {
-                setSafe();
+//                setSafe();
                 return false;
             }
         }

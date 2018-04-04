@@ -1,11 +1,10 @@
 package view.dataCollect.hitch;
 
-import domain.HitchUnitBean;
+import domain.PointBean;
+import domain.UnitBean;
 import mytools.ClickButton;
-import service.HitchUnitService;
 import service.PointService;
-import service.SensorService;
-import view.dataCollect.datacollect.ChartView;
+import service.UnitService;
 import view.icon.CloseIcon;
 import view.systemSetup.SystemSetup;
 
@@ -16,9 +15,9 @@ import java.sql.SQLException;
 
 public class HitchTitleDialog extends JDialog {
     private JTextField jtftitle;
-    private HitchUnitBean hitchUnitBean;
+    private UnitBean hitchUnitBean;
 
-    public HitchTitleDialog(Window owner, final HitchUnitBean hitchUnitBean) {
+    public HitchTitleDialog(Window owner, final UnitBean hitchUnitBean) {
         jtftitle = new JTextField();
         jtftitle.setText(hitchUnitBean.getPlace());
         this.hitchUnitBean = hitchUnitBean;
@@ -59,16 +58,19 @@ public class HitchTitleDialog extends JDialog {
                     JOptionPane.showMessageDialog(null, "请输入监测位置名称", "错误", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                hitchUnitBean.setPlace("故障:"+jtftitle.getText());
+                hitchUnitBean.setPlace("故障:" + jtftitle.getText());
                 try {
-                    HitchUnitService.updatePlace(hitchUnitBean);
+
+                    PointBean pointBean = PointService.getUnitPoint(hitchUnitBean.getPoint());
+                    pointBean.setPlace(hitchUnitBean.getPlace());
+                    PointService.updatePlace(pointBean);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                     JOptionPane.showMessageDialog(null, "修改失败", "失败", JOptionPane.ERROR_MESSAGE);
                     dispose();
                     return;
                 }
-                HitchUnitService.refresh(hitchUnitBean);
+                UnitService.refresh(hitchUnitBean);
                 SystemSetup.getInstance().refresh();
                 JOptionPane.showMessageDialog(null, "修改成功", "成功", JOptionPane.INFORMATION_MESSAGE);
                 dispose();

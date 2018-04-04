@@ -57,7 +57,6 @@ public class CollectService {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
                 break;
             }
         }
@@ -68,8 +67,13 @@ public class CollectService {
      * 设置采集间隔
      */
     public static void setPeriod(UnitBean unitBean) {
-        CollectServer.getInstance().applyOffline(unitBean.getType(), unitBean.getNumber(), unitBean.getPeriod());
+        CollectServer.getInstance().applyUnitOffline(unitBean.getType(), unitBean.getNumber(), unitBean.getPeriod());
         cachePeriod(unitBean);
+    }
+
+
+    private static void saveHitch(byte type, byte number) {
+
     }
 
 

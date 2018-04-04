@@ -1,10 +1,8 @@
 package service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 
 import util.MyDbUtil;
 import domain.DataBaseAttr;
@@ -24,7 +22,7 @@ public class NetService {
      * @throws SQLException
      */
     public static void init() throws SQLException {
-        String sql = " select * from " + DataBaseAttr.NetTable + " group by type,number order by type ,number; ";
+        String sql = " select * from " + DataBaseAttr.GATEWAYTable + " group by type,number order by type ,number; ";
         netList = MyDbUtil.queryBeanListData(sql, NetBean.class);
         Collections.sort(netList);
     }

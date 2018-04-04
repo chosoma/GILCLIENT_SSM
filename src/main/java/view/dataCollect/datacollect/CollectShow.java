@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import domain.HitchBean;
 import domain.WarnBean;
 import mytools.MyUtil;
 
@@ -125,9 +124,7 @@ public class CollectShow extends JPanel {
         chartView.receDatas(flag, data);
     }
 
-    public synchronized void checkHitch(HitchBean hitchBean) {
-        chartView.checkHitch(hitchBean);
-    }
+
 
     public synchronized void receDatas(List<DataBean> dataList, boolean flag) {
         chartView.receDatas(dataList, flag);

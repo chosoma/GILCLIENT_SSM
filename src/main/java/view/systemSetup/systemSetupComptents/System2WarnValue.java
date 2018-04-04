@@ -1,11 +1,9 @@
 package view.systemSetup.systemSetupComptents;
 
-import domain.HitchUnitBean;
 import domain.UnitBean;
 import mytools.ClickButton;
 import mytools.ChangeButton;
 import mytools.MyUtil;
-import service.HitchUnitService;
 import service.PointService;
 import service.UnitService;
 
@@ -15,8 +13,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.List;
 import java.util.Vector;
 
@@ -47,11 +43,10 @@ public class System2WarnValue extends JPanel {
 
         Vector<String> vector = new Vector<>();
         vector.addAll(PointService.getPlaces());
-        vector.addAll(HitchUnitService.getPlaces());
 
 
         jcbPlace = new JComboBox<>(vector);
-//        jcbPlace = new JComboBox<>(PointService.getPlaces());
+//        jcbPlace = new JComboBox<>(PointService.getHitchPlaces());
         jcbPlace.setBorder(new TitledBorder(new LineBorder(Color.gray, 2), "监测点", TitledBorder.CENTER, TitledBorder.TOP, MyUtil.FONT_20, Color.BLACK));
         jcbPlace.setFont(MyUtil.FONT_20);
 //        jcbPlace.setBounds(75, 10, 100, 20);
@@ -59,7 +54,7 @@ public class System2WarnValue extends JPanel {
 //        jcbPlace.addItemListener(new ItemListener() {
 //            @Override
 //            public void itemStateChanged(ItemEvent e) {
-//                if(HitchUnitService.getPlaces().contains(jcbPlace.getSelectedItem())){
+//                if(HitchUnitService.getHitchPlaces().contains(jcbPlace.getSelectedItem())){
 //                    jcbXW.setEnabled(false);
 //                }else {
 //                    jcbXW.setEnabled(true);
@@ -92,10 +87,6 @@ public class System2WarnValue extends JPanel {
                 List<UnitBean> unitBeans = UnitService.getUnit(place, xw);
                 for (UnitBean unit : unitBeans) {
                     new SetWarnDialog(unit);
-                }
-                List<HitchUnitBean> hitchUnitBeans = HitchUnitService.getUnits(place,xw);
-                for (HitchUnitBean hitchUnitBean : hitchUnitBeans) {
-                    new SetHitchDialog(hitchUnitBean);
                 }
             }
         });
@@ -174,8 +165,6 @@ public class System2WarnValue extends JPanel {
         for (String place : PointService.getPlaces()) {
             jcbPlace.addItem(place);
         }
-        for (String place: HitchUnitService.getPlaces()){
-            jcbPlace.addItem(place);
-        }
+
     }
 }

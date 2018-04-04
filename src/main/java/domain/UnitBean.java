@@ -1,48 +1,54 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UnitBean implements Comparable<UnitBean> {
 
 
     private byte gatewaytype, gatewaynumber, type, number, period;
-    private float initvari;
-    private Float maxden;
-    private Float minden;
-    private Float maxper;
-    private Float minper;
+    private float initvari, x, y;
+    private Float maxden, minden, maxper, minper, SF6Temp;
     private Float warnTemp;
-    private boolean inittemp;
+    private boolean isinit;
+    private Float minvari, maxvari;
+    private byte vollevel;
+    private Float volwarn;
+    private int point;
+    private String xw, place;
+
 
     @Override
     public String toString() {
         return "UnitBean{" +
-                " type=" + type +
-                " number=" + number +
+                "gatewaytype=" + gatewaytype +
+                ", gatewaynumber=" + gatewaynumber +
+                ", type=" + type +
+                ", number=" + number +
+                ", period=" + period +
+                ", initvari=" + initvari +
+                ", x=" + x +
+                ", y=" + y +
+                ", maxden=" + maxden +
+                ", minden=" + minden +
+                ", maxper=" + maxper +
+                ", minper=" + minper +
+                ", SF6Temp=" + SF6Temp +
+                ", warnTemp=" + warnTemp +
+                ", isinit=" + isinit +
+                ", minvari=" + minvari +
+                ", maxvari=" + maxvari +
+                ", vollevel=" + vollevel +
+                ", volwarn=" + volwarn +
+                ", point=" + point +
+                ", xw='" + xw + '\'' +
+                ", place='" + place + '\'' +
                 '}';
-    }
-
-    private Float minvari;
-    private Float maxvari;
-    private int x, y, point;
-    private String xw, place;
-
-    public boolean isInittemp() {
-        return inittemp;
-    }
-
-    public void setInittemp(boolean inittemp) {
-        this.inittemp = inittemp;
     }
 
     public UnitBean() {
     }
 
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
 
     public UnitBean(byte gatewaytype, byte gatewaynumber, byte type, byte number) {
         setGatewaytype(gatewaytype);
@@ -75,14 +81,6 @@ public class UnitBean implements Comparable<UnitBean> {
         this.type = type;
     }
 
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
     public byte getNumber() {
         return number;
     }
@@ -107,20 +105,20 @@ public class UnitBean implements Comparable<UnitBean> {
         this.initvari = initvari;
     }
 
-    public Float getMinvari() {
-        return minvari;
+    public float getX() {
+        return x;
     }
 
-    public void setMinvari(Float minvari) {
-        this.minvari = minvari;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public Float getMaxvari() {
-        return maxvari;
+    public float getY() {
+        return y;
     }
 
-    public void setMaxvari(Float maxvari) {
-        this.maxvari = maxvari;
+    public void setY(float y) {
+        this.y = y;
     }
 
     public Float getMaxden() {
@@ -155,6 +153,14 @@ public class UnitBean implements Comparable<UnitBean> {
         this.minper = minper;
     }
 
+    public Float getSF6Temp() {
+        return SF6Temp;
+    }
+
+    public void setSF6Temp(Float SF6Temp) {
+        this.SF6Temp = SF6Temp;
+    }
+
     public Float getWarnTemp() {
         return warnTemp;
     }
@@ -163,20 +169,52 @@ public class UnitBean implements Comparable<UnitBean> {
         this.warnTemp = warnTemp;
     }
 
-    public int getX() {
-        return x;
+    public boolean isIsinit() {
+        return isinit;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setIsinit(boolean isinit) {
+        this.isinit = isinit;
     }
 
-    public int getY() {
-        return y;
+    public Float getMinvari() {
+        return minvari;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setMinvari(Float minvari) {
+        this.minvari = minvari;
+    }
+
+    public Float getMaxvari() {
+        return maxvari;
+    }
+
+    public void setMaxvari(Float maxvari) {
+        this.maxvari = maxvari;
+    }
+
+    public byte getVollevel() {
+        return vollevel;
+    }
+
+    public void setVollevel(byte vollevel) {
+        this.vollevel = vollevel;
+    }
+
+    public Float getVolwarn() {
+        return volwarn;
+    }
+
+    public void setVolwarn(Float volwarn) {
+        this.volwarn = volwarn;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
     }
 
     public String getXw() {
@@ -185,6 +223,14 @@ public class UnitBean implements Comparable<UnitBean> {
 
     public void setXw(String xw) {
         this.xw = xw;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     @Override
@@ -220,4 +266,32 @@ public class UnitBean implements Comparable<UnitBean> {
         result = 31 * result + (int) number;
         return result;
     }
+
+    public List<Object> getProper() {
+        List<Object> p = new ArrayList<>();
+        switch (type) {
+            case 1:
+                p.add(maxden);
+                p.add(minden);
+                p.add(maxper);
+                p.add(minper);
+                p.add(SF6Temp);
+                break;
+            case 2:
+                p.add(maxvari);
+                p.add(minvari);
+                break;
+            case 3:
+                p.add(warnTemp);
+                break;
+            case 4:
+                p.add(vollevel);
+                p.add(volwarn);
+                break;
+        }
+        p.add(number);
+        return p;
+    }
+
+
 }

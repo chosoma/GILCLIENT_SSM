@@ -1,16 +1,16 @@
 package view.dataCollect.hitch;
 
 import com.Configure;
-import domain.HitchBean;
-import domain.HitchUnitBean;
+import domain.DataBean;
 import domain.IconConfig;
+import domain.UnitBean;
 import domain.WarnBean;
-import service.HitchUnitService;
+import protocol.Protocol;
 import service.PointService;
+import service.UnitService;
 import view.Shell;
 import view.dataCollect.datacollect.CollectShow;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -21,16 +21,15 @@ import java.util.Iterator;
 
 public class HitchView extends JPanel {
     private Image backgroud;
-    private java.util.List<HitchUnitBean> hitchUnitBeans;
+    private java.util.List<UnitBean> hitchUnitBeans;
 
     public HitchView(Image backgroud) {
         this.setLayout(null);
         this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
         this.backgroud = backgroud;
-        hitchUnitBeans = HitchUnitService.getHitchUnitBeans();
+        hitchUnitBeans = UnitService.getUnitBeans(Protocol.UnitTypeHV);
         initHitchWarning();
         initHitchLabels();
-//        initHitchABCLabels();
     }
 
 
@@ -41,34 +40,11 @@ public class HitchView extends JPanel {
         hitchWarningPanel.add(new JLabel(new ImageIcon("images/main/warn_24.png")));
         hitchWarningPanel.add(new JLabel("正在报警", JLabel.CENTER));
         hitchWarningPanel.setVisible(false);
-//        hitchWarningPanel.setVisible(true);
         this.add(hitchWarningPanel);
         hitchWarningPanel.setBounds(0, 0, 100, 33);
-
-
     }
 
 
-//    private java.util.List<HitchABCLabel> hitchABCLabels;
-
-//    private void initHitchABCLabels() {
-//        hitchABCLabels = new ArrayList<>();
-//        try {
-//            java.util.List<PointBean> pointBeans = PointService.getHitchLabelPoint();
-//            for (PointBean pointBean : pointBeans) {
-//                HitchABCLabel hitchABCLabel = new HitchABCLabel(pointBean);
-//                this.add(hitchABCLabel);
-//                hitchABCLabels.add(hitchABCLabel);
-//                for (HitchUnitBean unitbean : hitchUnitBeans) {
-//                    if (unitbean.getUnitPoint() == pointBean.getUnitPoint()) {
-//                        hitchABCLabel.addHitchUnit(unitbean);
-//                    }
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private java.util.List<HitchIcon> hitchIcons;
 
@@ -79,7 +55,7 @@ public class HitchView extends JPanel {
 
         for (int i = 0; i < iconConfigs.length; i++) {
             Icon icon = new ImageIcon(iconConfigs[i].getIconname());
-            HitchUnitBean unit = getUnit(iconConfigs[i].getPoint(), iconConfigs[i].getXw());
+            UnitBean unit = getUnit(iconConfigs[i].getPoint(), iconConfigs[i].getXw());
             if (unit == null) {
                 System.out.println("未找到对应单元");
                 continue;
@@ -102,8 +78,8 @@ public class HitchView extends JPanel {
     }
 
 
-    private HitchUnitBean getUnit(int point, String xw) {
-        for (HitchUnitBean hitchunit :
+    private UnitBean getUnit(int point, String xw) {
+        for (UnitBean hitchunit :
                 hitchUnitBeans) {
             if (point == hitchunit.getPoint() && xw.equals(hitchunit.getXw())) {
                 return hitchunit;
@@ -125,7 +101,6 @@ public class HitchView extends JPanel {
                     hitchLabel.setInfoPanelBounds(hitchLabel.getX(), hitchLabel.getY());
                     hitchLabel.setInfoPanelVisible(true);
                 }
-
                 @Override
                 public void mouseExited(MouseEvent e) {
                     hitchLabel.setInfoPanelVisible(false);
@@ -146,16 +121,12 @@ public class HitchView extends JPanel {
             hitchLabel.setBounds((int) (this.getWidth() * hitchLabel.getHitchX()) - 10, (int) (this.getHeight() * hitchLabel.getHitchY()) - 10, hitchLabel.getWidth(), hitchLabel.getHeight());
             hitchLabel.getHitchIconLabel().setIconBounds(getWidth(), getHeight(), getWidth(), getHeight());
         }
-//        for (HitchABCLabel hitchLabel : hitchABCLabels) {
-//            hitchLabel.setBounds((int) (this.getWidth() * hitchLabel.getPointX()), (int) (this.getHeight() * hitchLabel.getPointY()), (int) (125.0 / 1600 * getWidth()), (int) (225.0 / 600 * getHeight()));
-//            hitchLabel.updateUI();
-//        }
     }
 
 
-    private java.util.List<HitchBean> hitchings = new ArrayList<HitchBean>();
+    private java.util.List<DataBean> hitchings = new ArrayList<DataBean>();
 
-    public void checkHitch(HitchBean hitchBean) {
+    public void checkHitch(DataBean hitchBean) {
         for (HitchIcon hitchicon : hitchIcons) {
             boolean flag = hitchicon.checkUnit(hitchBean);//true 报警,false 未报警
             if (flag) {
@@ -163,18 +134,15 @@ public class HitchView extends JPanel {
                 hitchWarningPanel.setVisible(true);
                 hitchicon.setHitchIconLabelVisible(true);
                 WarnBean warnBean = new WarnBean();
-                warnBean.setPointBean(PointService.getHitchPoint(hitchicon.getPoint()));
+                warnBean.setPointBean(PointService.getUnitPoint(hitchicon.getPoint()));
                 warnBean.setXw(hitchicon.getXw());
                 warnBean.setDate(hitchBean.getDate());
-                warnBean.setInfo("故障值:" + String.valueOf(hitchBean.getVol()));
-                hitchicon.setHitchValue(String.valueOf(hitchBean.getVol()));
+                warnBean.setInfo("故障值:" + String.valueOf(hitchBean.getHitchvol()));
+                hitchicon.setHitchValue(String.valueOf(hitchBean.getHitchvol()));
                 CollectShow.getInstance().addWarning(warnBean);
                 Shell.getInstance().showHitch();
             }
         }
-//        for (HitchABCLabel hitchLabel : hitchABCLabels) {
-//            hitchLabel.checkHitch(hitchBean);
-//        }
     }
 
     public void hiddenUser() {
@@ -189,10 +157,10 @@ public class HitchView extends JPanel {
         for (HitchIcon hitch : hitchIcons) {
             if (hitch.getHitchUnitBean().getPoint() == warnBean.getPointBean().getPoint() && hitch.getHitchUnitBean().getXw().equals(warnBean.getXw())) {
                 hitch.setSafe();
-                Iterator<HitchBean> iterator = hitchings.iterator();
+                Iterator<DataBean> iterator = hitchings.iterator();
                 while (iterator.hasNext()) {
-                    HitchBean hitchBean = iterator.next();
-                    if (hitch.getUnittype() == hitchBean.getUnittype() && hitch.getUnitnumber() == hitchBean.getUnitnumber()) {
+                    DataBean hitchBean = iterator.next();
+                    if (hitch.getUnittype() == hitchBean.getUnitType() && hitch.getUnitnumber() == hitchBean.getUnitNumber()) {
                         hitch.setHitchValue("无报警");
                         hitch.setHitchIconLabelVisible(false);
                         iterator.remove();
@@ -200,7 +168,6 @@ public class HitchView extends JPanel {
                 }
             }
         }
-
         if (hitchings.size() == 0) {
             hitchWarningPanel.setVisible(false);
         }

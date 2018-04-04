@@ -104,7 +104,7 @@ public class CheckUpdate extends JFrame {
 
                 //网络上的文件位置  
                 String updateUrl =
-                        "http://XXX.XXX.XXX/downloads/simpkle.exe";
+                        "http://118.89.103.234/downloads/simpkle.exe";
 
                 HttpURLConnection httpUrl = null;
                 BufferedInputStream bis = null;
