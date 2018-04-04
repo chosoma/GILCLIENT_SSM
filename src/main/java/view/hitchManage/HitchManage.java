@@ -566,7 +566,8 @@ public class HitchManage extends JPanel {
             xw = (String) jcbXW.getSelectedItem();
             para.setXw(xw);
         }
-        List<UnitBean> hitchUnits = UnitService.getUnit(place, xw);
+        List<UnitBean> hitchUnits = UnitService.getUnits(para);
+        System.out.println(hitchUnits);
         para.setUnits(hitchUnits);
 //        HitchUnitBean hitchUnitBean = HitchUnitService.getUnit(place, xw);
 //        if (hitchUnitBean != null) {
