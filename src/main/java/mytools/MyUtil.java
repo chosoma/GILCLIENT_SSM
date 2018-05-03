@@ -49,9 +49,9 @@ public class MyUtil {
     public static Color[] HoverColors = new Color[]{Color.WHITE,
             new Color(240, 240, 240), new Color(220, 220, 220), Color.WHITE};
     // 按钮外边框颜色
-    public static Color BUTTON_OUTER_BORDER = new Color(200, 200, 200);
+    public static Color BUTTON_OUTER_BORDER = new Color(150, 150, 150);
     // 按钮内边框颜色
-    public static Color BUTTON_INNER_BORDER = Color.WHITE;
+    public static Color BUTTON_INNER_BORDER = new Color(200, 200, 200);
 
     // 按钮边框颜色
     public static Color Component_Border_Color = new Color(127, 157, 185);
@@ -60,7 +60,7 @@ public class MyUtil {
             Component_Border_Color, 1);
 
 
-    private static String Font_Name = "宋体";
+    private static String Font_Name = "微软雅黑";
     private static int Font_Style = Font.PLAIN;
     public static Font FONT_36 = new Font(Font_Name, Font_Style, 36);
     public static Font FONT_20 = new Font(Font_Name, Font_Style, 20);
@@ -74,7 +74,8 @@ public class MyUtil {
     public static Font FONT_10 = new Font(Font_Name, Font_Style, 10);
     public static Font FONT_9 = new Font(Font_Name, Font_Style, 9);
 
-    public static Font TitleFont = new Font("微软雅黑", Font.BOLD, 12);
+    public static Font TitleFont = new Font(Font_Name, Font_Style, 12);
+    public static Font TitleFont30 = new Font(Font_Name, Font_Style, 30);
 
     /**
      * 表格颜色

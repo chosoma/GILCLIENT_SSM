@@ -172,7 +172,7 @@ public class LadderFrame extends JFrame {
         Date date = ca.getTime();
         // 起始时间
         c2s1 = new Check2SPinner(false, date);
-        c2s1.setMaximumSize(new Dimension(165, 17));
+//        c2s1.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s1);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -184,7 +184,7 @@ public class LadderFrame extends JFrame {
 
         // 终止时间
         c2s2 = new Check2SPinner(false, date2);
-        c2s2.setMaximumSize(new Dimension(165, 17));
+//        c2s2.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s2);
 
 //        JLabel jlxw = new JLabel("相位", JLabel.CENTER);

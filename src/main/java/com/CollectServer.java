@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import domain.NetBean;
 import service.UnitService;
 import domain.UnitBean;
@@ -34,10 +36,17 @@ public class CollectServer {
     /**
      * 启动服务
      */
-    public void openConnection() throws IOException {
+    public void openConnection()  {
 
         int localPort = Integer.valueOf(Configure.getLocalPort());
-        ss = new ServerSocket(localPort);
+        try {
+			ss = new ServerSocket(localPort);
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(null, "程序已经启动");
+			System.exit(0);
+			e1.printStackTrace();
+			return;
+		}
         listST.clear();
         new Thread(new Runnable() {
             @Override
@@ -51,7 +60,7 @@ public class CollectServer {
                     // e.printStackTrace();
                 } finally {
                     // 关闭serverSocket
-                    if (!ss.isClosed()) {
+                    if (ss!=null&&!ss.isClosed()) {
                         try {
                             ss.close();
                         } catch (IOException e) {
@@ -69,8 +78,12 @@ public class CollectServer {
 //     */
     public void closeConnection() {
         try {
-            ss.close();
+        	if(ss!=null) {        		
+        		ss.close();
+        	}
         } catch (IOException e1) {
+        	JOptionPane.showMessageDialog(null, "程序已启动");
+        	System.exit(0);
             e1.printStackTrace();
         }
         // 关闭socket

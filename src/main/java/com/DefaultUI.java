@@ -85,8 +85,8 @@ public class DefaultUI {
         UIManager.put("ScrollPane.background", Color.WHITE);
 
 //        // JSPinner背景色
-//        UIManager.put("Spinner.background", Color.WHITE);
-//        UIManager.put("Spinner.foreground", Color.black);
+        UIManager.put("Spinner.background", Color.WHITE);
+        UIManager.put("Spinner.foreground", Color.black);
 
         UIManager.put("FormattedTextField.background", Color.WHITE);
 

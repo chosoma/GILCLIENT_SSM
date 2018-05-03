@@ -67,7 +67,7 @@ public class DataService {
     public static DataBean getLatestAmtemp() throws SQLException {
         String sql = "select d.temp " +
                 "from data d , unit u " +
-                "where d.unittype = u.type " +
+                "where d.unittype = u.type and u.type = 3 " +
                 "and d.unitnumber = u.number " +
                 "and u.number = (select number from unit_temp where isinit = 1) order by d.date desc limit 1 ";
         return MyDbUtil.queryBeanData(sql, DataBean.class);

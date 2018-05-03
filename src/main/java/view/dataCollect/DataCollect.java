@@ -1,6 +1,8 @@
 package view.dataCollect;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.sql.SQLException;
@@ -9,8 +11,10 @@ import java.util.List;
 import javax.swing.*;
 
 import domain.DataBean;
+import mytools.CollectTitleButton;
 import service.DataService;
 import view.Shell;
+import view.dataCollect.datacollect.ChartView;
 import view.dataCollect.datacollect.CollectShow;
 
 public class DataCollect {
@@ -36,11 +40,14 @@ public class DataCollect {
         return contentPane;
     }
 
-//    private ScheduledThreadPoolExecutor scheduler = null;
+    //    private ScheduledThreadPoolExecutor scheduler = null;
 //    RunnableScheduledFuture<?> rsfRoll;
 
 
     private void init2() {
+//        initPanel();
+//        initButton();
+
         CollectShow collectShow = CollectShow.getInstance();
 //        scheduler = new ScheduledThreadPoolExecutor(1);
         contentPane = new JPanel();
@@ -48,21 +55,9 @@ public class DataCollect {
         contentPane.add(collectShow, BorderLayout.CENTER);
         contentPane.setEnabled(false);
         contentPane.setBorder(null);
-        contentPane.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-//                if (collectShow.isNeedRoll()) {
-//                     TODO Auto-generated method stub
-                    Shell.getInstance().showButton(true);
-//                }
-            }
 
-            @Override
-            public void componentHidden(ComponentEvent e) {
-                // TODO Auto-generated method stub
-                Shell.getInstance().showButton(false);
-            }
-        });
+
+
 
         new Thread(new Runnable() {
             @Override
@@ -81,5 +76,12 @@ public class DataCollect {
             }
         }).start();
 
+
+    }
+
+    private void initButton() {
+    }
+
+    private void initPanel() {
     }
 }

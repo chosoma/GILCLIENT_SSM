@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import domain.*;
 import service.SensorService;
-import view.dataCollect.graph.DdView;
+import view.dataCollect.graph.GraphView;
 import view.dataCollect.hitch.HitchView;
 
 public class ChartView extends JPanel {
@@ -19,7 +19,7 @@ public class ChartView extends JPanel {
     private CardLayout centerCard;// 卡片布局
     private static ChartView CV;
     private AbcView panelSF6, panelWd, panelSSJ;
-    private DdView panelGraph;
+    private GraphView panelGraph;
     private HitchView panelHitch;
 
     private ChartView() {
@@ -69,7 +69,7 @@ public class ChartView extends JPanel {
         Image backgroud;
         try {
             backgroud = ImageIO.read(this.getClass().getClassLoader().getResource("icon/indexGroud.png"));
-            panelGraph = new DdView(backgroud);
+            panelGraph = new GraphView(backgroud);
             this.add(panelGraph, "TX");
             panelHitch = new HitchView(backgroud);
             this.add(panelHitch, "GZ");

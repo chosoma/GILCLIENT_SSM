@@ -87,8 +87,8 @@ public class AbcUnitView extends JPanel {
         place.setText(title);
     }
 
-    private static Color colorTitle = new Color(182, 216, 245);// 138, 191, 237
-    private static Color colorSubTitle = new Color(232, 242, 254);// 182, 216, 245
+    private static Color colorTitle = new Color(138, 191, 237);// 138, 191, 237
+    private static Color colorSubTitle = new Color(182, 216, 245);// 182, 216, 245
 
 
     private List<Boolean> flags;

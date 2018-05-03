@@ -260,7 +260,7 @@ public class DataManage extends JPanel {
         Date date = ca.getTime();
         // 起始时间
         c2s1 = new Check2SPinner(false, date);
-        c2s1.setMaximumSize(new Dimension(165, 17));
+//        c2s1.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s1);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -272,7 +272,7 @@ public class DataManage extends JPanel {
 
         // 终止时间
         c2s2 = new Check2SPinner(false, date2);
-        c2s2.setMaximumSize(new Dimension(165, 17));
+//        c2s2.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s2);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -359,7 +359,7 @@ public class DataManage extends JPanel {
 //                }
 
                 try {
-                    java.util.Map<UnitBean, List<Date>> dataBeanListMap = getSelectTable();
+                    Map<UnitBean, List<Date>> dataBeanListMap = getSelectTable();
                     DataManageService.deleteData(dataBeanListMap);
 
 //                    DataManageService.deleteData(ids);
@@ -407,7 +407,7 @@ public class DataManage extends JPanel {
 //                    ids[i] = (Integer) table.getValueAt(i, 0);
 //                }
                 try {
-                    java.util.Map<UnitBean, List<Date>> dataBeanListMap = getAllTable();
+                    Map<UnitBean, List<Date>> dataBeanListMap = getAllTable();
                     DataManageService.deleteData(dataBeanListMap);
 //                    DataManageService.deleteData(ids);
                     JOptionPane.showMessageDialog(null, "数据已成功清空", "提示", JOptionPane.INFORMATION_MESSAGE);
@@ -471,9 +471,9 @@ public class DataManage extends JPanel {
 
     private JButton search;
 
-    private java.util.Map<UnitBean, List<Date>> getSelectTable() {
+    private Map<UnitBean, List<Date>> getSelectTable() {
         int[] selRows = table.getSelectedRows();
-        java.util.Map<UnitBean, List<Date>> dataBeanDateMap = new HashMap<>();
+        Map<UnitBean, List<Date>> dataBeanDateMap = new HashMap<>();
         for (int selRow : selRows) {
             String place = (String) table.getValueAt(selRow, 0);
             String xw = (String) table.getValueAt(selRow, 1);
@@ -501,9 +501,9 @@ public class DataManage extends JPanel {
         return dataBeanDateMap;
     }
 
-    private java.util.Map<UnitBean, List<Date>> getAllTable() {
+    private Map<UnitBean, List<Date>> getAllTable() {
         int selRows = table.getRowCount();
-        java.util.Map<UnitBean, List<Date>> dataBeanDateMap = new HashMap<>();
+        Map<UnitBean, List<Date>> dataBeanDateMap = new HashMap<>();
         for (int i = 0; i < selRows; i++) {
             String place = (String) table.getValueAt(i, 0);
             String xw = (String) table.getValueAt(i, 1);
@@ -512,7 +512,9 @@ public class DataManage extends JPanel {
                 unitBean = UnitService.getInitTempUnit();
             } else {
                 PointBean pointBean = PointService.getUnitPoint(place);
+                System.out.println(pointBean);
                 unitBean = UnitService.getUnit(pointBean.getPoint(), xw);
+                System.out.println(unitBean);
             }
             Date date;
             if (unitBean.getType() == 1) {
@@ -673,7 +675,7 @@ public class DataManage extends JPanel {
         }
         para.setXw(xw);
         List<UnitBean> units = UnitService.getUnits(para);
-        //system.out.println("units:" + units);
+        System.out.println("units:" + units);
         para.setUnits(units);
         Date startT = c2s1.getTime(), endT = c2s2.getTime();
         if (startT != null && endT != null && startT.after(endT)) {

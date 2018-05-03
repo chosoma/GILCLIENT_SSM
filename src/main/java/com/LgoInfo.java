@@ -27,7 +27,7 @@ public class LgoInfo {
 
 
     private static void intiDefault() {
-        SoftName = "220KV GIL在线检测系统";
+        SoftName = "220kV GIL在线监测系统";
         CopyrightName = "江苏南瑞恒驰电气装备有限公司";
     }
 

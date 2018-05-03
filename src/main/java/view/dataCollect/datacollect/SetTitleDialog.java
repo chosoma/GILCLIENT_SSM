@@ -33,8 +33,8 @@ public class SetTitleDialog extends JDialog {
         JPanel headPane = new JPanel(new BorderLayout()) {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                Color HeadC1 = new Color(115, 168, 240),
-                        HeadC2 = new Color(136, 186, 205);
+                Color HeadC1 = new Color(90, 163, 146),
+                        HeadC2 = new Color(22, 106, 90);
                 g2.setPaint(new GradientPaint(0, 0, HeadC1, 0, getHeight() - 1, HeadC2));
                 g2.fillRect(0, 0, getWidth(), getHeight());
                 g2.dispose();
@@ -110,13 +110,13 @@ public class SetTitleDialog extends JDialog {
                 }
                 switch (pointBean.getUnitType()) {
                     case 1:
-                        pointBean.setPlace("SF6:" + jtftitle.getText());
+                        pointBean.setPlace("六氟化硫:" + jtftitle.getText());
                         break;
                     case 2:
                         pointBean.setPlace("伸缩节:" + jtftitle.getText());
                         break;
                     case 3:
-                        pointBean.setPlace("温度:" + jtftitle.getText());
+                        pointBean.setPlace("温升:" + jtftitle.getText());
                         break;
                 }
                 try {

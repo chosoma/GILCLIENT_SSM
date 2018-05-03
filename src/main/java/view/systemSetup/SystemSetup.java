@@ -16,18 +16,21 @@ import java.awt.event.MouseEvent;
 
 public class SystemSetup extends JPanel {
     private static SystemSetup S2S = null;
-    private CommGPRS sys2comm;
+    //    private CommGPRS sys2comm;
     private System2Period sys2per;//采集周期
     private System2WdSet sys2Wd;//温度频率
     private System2WarnValue sys2warn;//报警值设置
     private System2PassWord sys2pw;//修改密码
     private System2User sys2u;//用户管理
     private JPanel leftPanel, rightPanel;
-    private JLabel[] leftLabels = new JLabel[6];    //0通讯 1采集周期 2温度频率 3报警设置 4用户管理 5修改密码
-    private String[] labelString = new String[]{"通讯设置", "采集周期", "温度频率", "报警设置", "用户管理", "修改密码"};
-    private String[] rightString = new String[]{"通 讯 设 置", "采 集 周 期", "温 度 频 率", "报 警 设 置", "用 户 管 理", "修 改 密 码"};
+    private JLabel[] leftLabels = new JLabel[5];    //0通讯 1采集周期 2温度频率 3报警设置 4用户管理 5修改密码
+    private String[] labelString = new String[]{
+//            "通讯设置",
+            "采集周期", "温度频率", "报警设置", "用户管理", "修改密码"};
+    private String[] rightString = new String[]{
+//            "通 讯 设 置",
+            "采 集 周 期", "温 度 频 率", "报 警 设 置", "用 户 管 理", "修 改 密 码"};
     private JLabel titleLabel;
-    private ImageIcon[][] imageIcons = new ImageIcon[6][2]; //0通讯 1采集周期 2温度频率 3报警设置 4用户管理 5修改密码
     private boolean isInitialize = false;// 初始化标志，用于首次打开显示时用
     private int dividerLocation = 250;// 分割条位置
 
@@ -73,7 +76,7 @@ public class SystemSetup extends JPanel {
         titleLabel = new JLabel(labelString[0], JLabel.CENTER);
         titleLabel.setFont(MyUtil.FONT_36);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));// 绘制空白边框
-        sys2comm = new CommGPRS();
+//        sys2comm = new CommGPRS();
         sys2per = new System2Period();
         sys2pw = new System2PassWord();
         sys2warn = new System2WarnValue();
@@ -82,7 +85,7 @@ public class SystemSetup extends JPanel {
         rightPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5000, 10));
         rightPanel.setOpaque(false);
         rightPanel.add(titleLabel, 0);
-        rightPanel.add(sys2comm, 1);
+        rightPanel.add(sys2per, 1);
     }
 
 
@@ -91,7 +94,7 @@ public class SystemSetup extends JPanel {
         leftPanel = new MyPanel(MyUtil.LEFT_PANE_COLOR, 1.0f);
         leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER, dividerLocation, 30));
         for (int i = 0; i < leftLabels.length; i++) {
-            leftLabels[i] = new JLabel(labelString[i], imageIcons[i][0], JLabel.CENTER);
+            leftLabels[i] = new JLabel(labelString[i], JLabel.CENTER);
             leftPanel.add(leftLabels[i]);
             leftLabels[i].setFont(MyUtil.FONT_16);
             leftLabels[i].setPreferredSize(new Dimension(140, 50));
@@ -101,22 +104,22 @@ public class SystemSetup extends JPanel {
                 public void mouseClicked(MouseEvent arg0) {
                     JPanel jPanel = null;
                     switch (index) {
+//                        case 0:
+//                            jPanel = sys2comm;
+//                            break;
                         case 0:
-                            jPanel = sys2comm;
-                            break;
-                        case 1:
                             jPanel = sys2per;
                             break;
-                        case 2:
+                        case 1:
                             jPanel = sys2Wd;
                             break;
-                        case 3:
+                        case 2:
                             jPanel = sys2warn;
                             break;
-                        case 4:
+                        case 3:
                             jPanel = sys2u;
                             break;
-                        case 5:
+                        case 4:
                             jPanel = sys2pw;
                             break;
                     }
@@ -133,27 +136,28 @@ public class SystemSetup extends JPanel {
                 @Override
                 public void mouseEntered(MouseEvent arg0) {
                     leftLabels[index].setForeground(Color.WHITE);
-                    leftLabels[index].setIcon(imageIcons[index][0]);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent arg0) {
                     leftLabels[index].setForeground(Color.BLACK);
-                    leftLabels[index].setIcon(imageIcons[index][1]);
                 }
             });
         }
     }
 
     public void hideUserMan() {
-        for (int i = 1; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             leftLabels[i].setVisible(false);
         }
+        titleLabel.setText(rightString[4]);
+        rightPanel.remove(1);
+        rightPanel.add(sys2pw, 1);
     }
 
-    public void closeResource() {
-        sys2comm.closeResource();
-    }
+//    public void closeResource() {
+//        sys2comm.closeResource();
+//    }
 
     public boolean isEditable() {
 //        return sys2comm.isEditable();
@@ -170,7 +174,7 @@ public class SystemSetup extends JPanel {
         sys2warn.refresh();
     }
 
-    public void refreshPeriod(){
+    public void refreshPeriod() {
         sys2per.refreshPeriod();
     }
 

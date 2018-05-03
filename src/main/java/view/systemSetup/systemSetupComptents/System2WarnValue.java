@@ -13,6 +13,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 import java.util.Vector;
 
@@ -29,87 +31,56 @@ public class System2WarnValue extends JPanel {
 
     private JComboBox<String> jcbPlace;
     private JComboBox<String> jcbXW;
-    private JButton jbtSet;
-    private JButton cancel, edit;
+    //    private JButton jbtSet;
+    private JButton cancel, set, edit;
 
     private void init() {
-        JPanel center = new JPanel();
+        JPanel center = new JPanel(null);
         center.setBorder(MyUtil.Component_Border);
         center.setBounds(0, 0, 500, 320);
         this.add(center);
-//        JLabel jltype = new JLabel("监测点:", JLabel.RIGHT);
-//        jltype.setBounds(25, 10, 50, 20);
-//        this.add(jltype);
 
+        int x = 40;
+        int y = 100; int yheight = 60;
+        int widthlabel = 100;
+        int widthcombox = 300;
+        int height = 30;
+
+        JLabel jltype = new JLabel("测点:", JLabel.LEFT);
+        jltype.setBounds(x, y, widthlabel, height);
+        jltype.setFont(MyUtil.FONT_20);
+        center.add(jltype);
+        y += yheight;
+        JLabel jlnumber = new JLabel("相位:", JLabel.LEFT);
+        jlnumber.setBounds(x, y, widthlabel, height);
+        jlnumber.setFont(MyUtil.FONT_20);
+        center.add(jlnumber);
+
+        y = 100;
+
+        x = 160;
         Vector<String> vector = new Vector<>();
         vector.addAll(PointService.getPlaces());
-
-
         jcbPlace = new JComboBox<>(vector);
-//        jcbPlace = new JComboBox<>(PointService.getHitchPlaces());
-        jcbPlace.setBorder(new TitledBorder(new LineBorder(Color.gray, 2), "监测点", TitledBorder.CENTER, TitledBorder.TOP, MyUtil.FONT_20, Color.BLACK));
+//        jcbPlace.setBorder(new TitledBorder(new LineBorder(Color.gray, 2), "监测点", TitledBorder.CENTER, TitledBorder.TOP, MyUtil.FONT_20, Color.BLACK));
         jcbPlace.setFont(MyUtil.FONT_20);
-//        jcbPlace.setBounds(75, 10, 100, 20);
+        jcbPlace.setToolTipText((String) jcbPlace.getSelectedItem());
+        jcbPlace.setBounds(x, y, widthcombox, height);
         center.add(jcbPlace);
-//        jcbPlace.addItemListener(new ItemListener() {
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                if(HitchUnitService.getHitchPlaces().contains(jcbPlace.getSelectedItem())){
-//                    jcbXW.setEnabled(false);
-//                }else {
-//                    jcbXW.setEnabled(true);
-//                }
-//            }
-//        });
+        y += yheight;
 
-//        JLabel jlnumber = new JLabel("相位:", JLabel.RIGHT);
-//        jlnumber.setBounds(25, 40, 50, 20);
-//        this.add(jlnumber);
-
-        jcbXW = new JComboBox<>(new String[]{"A", "B", "C"});
-        jcbXW.setBorder(new TitledBorder(new LineBorder(Color.gray, 2), "相位", TitledBorder.CENTER, TitledBorder.TOP, MyUtil.FONT_20, Color.BLACK));
-        jcbXW.setFont(MyUtil.FONT_20);
-//        jcbXW.setBounds(75, 40, 100, 20);
-        center.add(jcbXW);
-
-        jbtSet = new ClickButton("修改");
-        jbtSet.setFont(MyUtil.FONT_20);
-//        jbtSet.setBounds(84, 80, 80, 26);
-        jbtSet.addActionListener(new ActionListener() {
+        jcbPlace.addItemListener(new ItemListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String place = (String) jcbPlace.getSelectedItem();
-                if (place != null && place.equals("")) {
-                    JOptionPane.showMessageDialog(null, "请选择监测点", "提示", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-                String xw = (String) jcbXW.getSelectedItem();
-                List<UnitBean> unitBeans = UnitService.getUnit(place, xw);
-                for (UnitBean unit : unitBeans) {
-                    new SetWarnDialog(unit);
-                }
+            public void itemStateChanged(ItemEvent e) {
+                jcbPlace.setToolTipText((String) jcbPlace.getSelectedItem());
             }
         });
-        jcbPlace.setSelectedIndex(0);
-        center.add(jbtSet);
+        jcbXW = new JComboBox<>(new String[]{"A", "B", "C"});
+//        jcbXW.setBorder(new TitledBorder(new LineBorder(Color.gray, 2), "相位", TitledBorder.CENTER, TitledBorder.TOP, MyUtil.FONT_20, Color.BLACK));
+        jcbXW.setFont(MyUtil.FONT_20);
+        jcbXW.setBounds(x, y, widthcombox, height);
+        center.add(jcbXW);
 
-        GridBagLayout gbl = new GridBagLayout();
-        GridBagConstraints gbs = new GridBagConstraints();
-        gbs.fill = GridBagConstraints.BOTH;
-        gbs.gridwidth = 1;
-        gbs.gridheight = 1;
-        gbs.insets = new Insets(10, 10, 10, 10);
-        gbs.gridx = 0;
-        gbs.gridy = 0;
-        gbl.setConstraints(jcbPlace, gbs);
-
-        gbs.gridy++;
-        gbl.setConstraints(jcbXW, gbs);
-
-        gbs.gridy++;
-        gbl.setConstraints(jbtSet, gbs);
-
-        center.setLayout(gbl);
 
     }
 
@@ -123,7 +94,6 @@ public class System2WarnValue extends JPanel {
         Dimension buttonSize = new Dimension(60, 30);
 
         edit = new ChangeButton("修改", new ImageIcon("images/edit.png"));
-        edit.setToolTipText("修改连接设置");
         edit.setPreferredSize(buttonSize);
         edit.addActionListener(new ActionListener() {
             @Override
@@ -132,9 +102,22 @@ public class System2WarnValue extends JPanel {
                 setEditable(true);
                 edit.setEnabled(false);
                 cancel.setEnabled(true);
+                set.setEnabled(true);
             }
         });
         toolbar.add(edit);
+
+        set = new ChangeButton("设置", new ImageIcon("images/set.png"));
+        set.setToolTipText("设置");
+        set.setEnabled(false);
+        set.setPreferredSize(buttonSize);
+        set.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setDialog();
+            }
+        });
+        toolbar.add(set);
 
 
         cancel = new ChangeButton("退出", new ImageIcon("images/cancel.png"));
@@ -147,6 +130,7 @@ public class System2WarnValue extends JPanel {
                 setEditable(false);
                 edit.setEnabled(true);
                 cancel.setEnabled(false);
+                set.setEnabled(false);
             }
         });
         toolbar.add(cancel);
@@ -154,10 +138,23 @@ public class System2WarnValue extends JPanel {
 
     }
 
+    private void setDialog() {
+        String place = (String) jcbPlace.getSelectedItem();
+        if (place != null && place.equals("")) {
+            JOptionPane.showMessageDialog(null, "请选择监测点", "提示", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        String xw = (String) jcbXW.getSelectedItem();
+        List<UnitBean> unitBeans = UnitService.getUnit(place, xw);
+        for (UnitBean unit : unitBeans) {
+            new SetWarnDialog(unit);
+        }
+    }
+
     private void setEditable(boolean flag) {
         jcbPlace.setEnabled(flag);
         jcbXW.setEnabled(flag);
-        jbtSet.setEnabled(flag);
+//        jbtSet.setEnabled(flag);
     }
 
     public void refresh() {

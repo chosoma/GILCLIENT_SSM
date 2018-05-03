@@ -34,16 +34,16 @@ public class DataManageService {
         stringBuilder.append("LEFT JOIN ").append(DataBaseAttr.PointTable).append(" p ON p.point = u.point ");
         switch (para.getUnitType()) {
             case Protocol.UnitTypeSF6:
-                stringBuilder.append("left join ").append(DataBaseAttr.UnitSF6Table).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeSF6);
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitSF6Table).append(" us on u.number = us.number and u.type = ").append(Protocol.UnitTypeSF6);
                 break;
             case Protocol.UnitTypeSSJ:
-                stringBuilder.append("left join ").append(DataBaseAttr.UnitVariTable).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeSSJ);
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitVariTable).append(" us on u.number = us.number and u.type = ").append(Protocol.UnitTypeSSJ);
                 break;
             case Protocol.UnitTypeWD:
-                stringBuilder.append("left join ").append(DataBaseAttr.UnitTempTable).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeWD);
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitTempTable).append(" us on u.number = us.number and u.type = ").append(Protocol.UnitTypeWD);
                 break;
             case Protocol.UnitTypeHV:
-                stringBuilder.append("left join ").append(DataBaseAttr.UnitHitchTable).append(" us on u.number = us.number and u.number = ").append(Protocol.UnitTypeHV);
+                stringBuilder.append("left join ").append(DataBaseAttr.UnitHitchTable).append(" us on u.number = us.number and u.type = ").append(Protocol.UnitTypeHV);
                 break;
         }
         ArrayList<Object> p = new ArrayList<Object>();
@@ -70,7 +70,7 @@ public class DataManageService {
         stringBuilder.append(" limit ?,? ");
         p.add(pageBean.getStart());
         p.add(pageBean.getPageCount());
-
+System.out.println(stringBuilder);
         return MyDbUtil.queryTableData(stringBuilder.toString(), p.toArray());
     }
 
@@ -134,7 +134,7 @@ public class DataManageService {
         return SensorService.getPlaces();
     }
 
-    public static void deleteData(java.util.Map<UnitBean, List<Date>> dataBeanListMap) throws SQLException {
+    public static void deleteData(Map<UnitBean, List<Date>> dataBeanListMap) throws SQLException {
         Set<Map.Entry<UnitBean, List<Date>>> entrySet = dataBeanListMap.entrySet();
         for (Map.Entry<UnitBean, List<Date>> entry : entrySet) {
             UnitBean unitBean = entry.getKey();

@@ -245,7 +245,7 @@ public class HitchManage extends JPanel {
         Date date = ca.getTime();
         // 起始时间
         c2s1 = new Check2SPinner(false, date);
-        c2s1.setMaximumSize(new Dimension(165, 17));
+//        c2s1.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s1);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -257,7 +257,7 @@ public class HitchManage extends JPanel {
 
         // 终止时间
         c2s2 = new Check2SPinner(false, date2);
-        c2s2.setMaximumSize(new Dimension(165, 17));
+//        c2s2.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s2);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -328,7 +328,7 @@ public class HitchManage extends JPanel {
 //                int[] ids = new int[selRows.length];
 
                 try {
-                    java.util.Map<UnitBean, java.util.List<Date>> warnBeanDateMap = getSelectTable();
+                    Map<UnitBean, List<Date>> warnBeanDateMap = getSelectTable();
                     DataManageService.deleteData(warnBeanDateMap);
 
                     JOptionPane.showMessageDialog(null, "故障信息已成功删除", "提示",
@@ -377,7 +377,7 @@ public class HitchManage extends JPanel {
 //                }
 
                 try {
-                    java.util.Map<UnitBean, java.util.List<Date>> hitchUnitBeanListMap = getAllTable();
+                    Map<UnitBean, List<Date>> hitchUnitBeanListMap = getAllTable();
 
                     DataManageService.deleteData(hitchUnitBeanListMap);
 
@@ -441,9 +441,9 @@ public class HitchManage extends JPanel {
         toolBarR.add(print);
     }
 
-    private java.util.Map<UnitBean, java.util.List<Date>> getSelectTable() {
+    private Map<UnitBean, List<Date>> getSelectTable() {
         int[] selRows = table.getSelectedRows();
-        java.util.Map<UnitBean, java.util.List<Date>> hitchBeanListHashMap = new HashMap<>();
+        Map<UnitBean, List<Date>> hitchBeanListHashMap = new HashMap<>();
         for (int selRow : selRows) {
             String place = (String) table.getValueAt(selRow, 0);
             String xw = (String) table.getValueAt(selRow, 1);
@@ -453,7 +453,7 @@ public class HitchManage extends JPanel {
             if (hitchBeanListHashMap.containsKey(hitchBean)) {
                 hitchBeanListHashMap.get(hitchBean).add(date);
             } else {
-                java.util.List<Date> dates = new ArrayList<>();
+                List<Date> dates = new ArrayList<>();
                 dates.add(date);
                 hitchBeanListHashMap.put(hitchBean, dates);
             }
@@ -461,9 +461,9 @@ public class HitchManage extends JPanel {
         return hitchBeanListHashMap;
     }
 
-    private java.util.Map<UnitBean, java.util.List<Date>> getAllTable() {
+    private Map<UnitBean, List<Date>> getAllTable() {
         int rowCount = table.getRowCount();
-        java.util.Map<UnitBean, java.util.List<Date>> hitchBeanListHashMap = new HashMap<>();
+        Map<UnitBean, List<Date>> hitchBeanListHashMap = new HashMap<>();
         for (int i = 0; i < rowCount; i++) {
             String place = (String) table.getValueAt(i, 0);
             String xw = (String) table.getValueAt(i, 1);
@@ -473,7 +473,7 @@ public class HitchManage extends JPanel {
             if (hitchBeanListHashMap.containsKey(hitchBean)) {
                 hitchBeanListHashMap.get(hitchBean).add(date);
             } else {
-                java.util.List<Date> dates = new ArrayList<>();
+                List<Date> dates = new ArrayList<>();
                 dates.add(date);
                 hitchBeanListHashMap.put(hitchBean, dates);
             }
@@ -489,7 +489,7 @@ public class HitchManage extends JPanel {
             getSearchConditon();
             DataManageModel model = DataModel_Hitch.getInstance();
             table.setModel(model);
-            java.util.List<Vector<Object>> datas = DataManageService.getTableData(para, pageBean);
+            List<Vector<Object>> datas = DataManageService.getTableData(para, pageBean);
             model.addDatas(datas);
         } catch (Exception e1) {
             e1.printStackTrace();

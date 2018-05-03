@@ -126,7 +126,7 @@ public class MyTitleButton extends JButton {
 	}
 
 	public Color getForeground() {
-		return Color.WHITE;
+		return Color.black;
 	}
 
 	public Font getFont() {

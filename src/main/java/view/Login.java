@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import com.DefaultUI;
 import com.LgoInfo;
+import service.CollectService;
 import service.UserService;
 
 import mytools.ClickButton;
@@ -44,7 +45,7 @@ public class Login extends JFrame {
         ContentPane.setBorder(BorderFactory.createLineBorder(new Color(44, 46,
                 54)));
 //        Image image = new ImageIcon(this.getClass().getResource("load.jpg"))                .getImage();
-        Image image = new ImageIcon(this.getClass().getClassLoader().getResource("icon/load.jpg")).getImage();
+        Image image = new ImageIcon(this.getClass().getClassLoader().getResource("icon/load.png")).getImage();
         jpBackground = new MyPanel(image, 1.0f);
         jpBackground.setLayout(null);
         ContentPane.add(jpBackground);
@@ -96,7 +97,7 @@ public class Login extends JFrame {
         jpBackground.add(jpLoad);
 
 //        JLabel jlbBridge = new JLabel(new ImageIcon(this.getClass().getResource("bridge.png")));
-        JLabel jlbBridge = new JLabel(new ImageIcon(this.getClass().getClassLoader().getResource("icon/bridge.png")));
+        JLabel jlbBridge = new JLabel(new ImageIcon(this.getClass().getClassLoader().getResource("icon/bridge80.png")));
         jlbBridge.setBounds(0, 0, 240, 80);
         jpLoad.add(jlbBridge);
 
@@ -109,7 +110,7 @@ public class Login extends JFrame {
         jpbProgress = new JProgressBar(0, 100);
         jpbProgress.setStringPainted(true);// 显示百分比字符
         jpbProgress.setIndeterminate(false); // 不确定的进度条
-        jpbProgress.setForeground(new Color(150, 170, 240));// 颜色
+        jpbProgress.setForeground(new Color(0, 111, 107));// 颜色
         jpbProgress.setBorderPainted(false);// 取消边框
         jpbProgress.setOpaque(false);// 设置透明背景
         jpbProgress.setBounds(0, 108, 240, 12);
@@ -180,7 +181,10 @@ public class Login extends JFrame {
 //                        CollectOperate.getInstance().hiddenUser();
                         WarnManage.getInstance().hiddenUser();
                     }
+                    Shell.getInstance().enableWindow(false);
                     Shell.getInstance().setVisible(true);
+                    CollectService.OpenColl1();
+//                    WinEventInterceptor.setKeyDisable(true);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     JOptionPane.showMessageDialog(null, e1.getMessage(), "提示",

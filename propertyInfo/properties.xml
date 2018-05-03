@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<property>
-    <!--采集-->
-    <collection>
-        <!-- 温度频率-->
-        <wdPeriod wd1="40" wd2="50" jg1="5" jg2="1"/>
-    </collection>
-    <!--通讯-->
-    <communication>
-        <!--GPRS/CDMA-->
-        <GPRS localport="8088"/>
-    </communication>
-    <!--数据库-->
-    <database ip="localhost" port="3306" dbname="gil"/>
-    <start jflib="jf.exe"/>
-    <icon0 point="401" xw="A" x="0.0" y="0.0" width="0.33" height="0.5" iconname="images/conduit0.png"/>
-    <icon1 point="401" xw="B" x="0.33" y="0.0" width="0.33" height="0.5" iconname="images/conduit1.png"/>
-    <icon2 point="401" xw="C" x="0.66" y="0.0" width="0.33" height="0.5" iconname="images/conduit2.png"/>
-    <icon3 point="402" xw="A" x="0.0" y="0.5" width="0.33" height="0.5" iconname="images/conduit3.png"/>
-    <icon4 point="402" xw="B" x="0.33" y="0.5" width="0.33" height="0.5" iconname="images/conduit4.png"/>
-    <icon5 point="402" xw="C" x="0.66" y="0.5" width="0.33" height="0.5" iconname="images/conduit5.png"/>
+<property> 
+  <!--采集-->  
+  <collection> 
+    <!-- 温度频率-->  
+    <wdPeriod wd1="40" wd2="41" jg1="5" jg2="1"/> 
+  </collection>  
+  <!--通讯-->  
+  <communication> 
+    <!--GPRS/CDMA-->  
+    <GPRS localport="8088"/> 
+  </communication>  
+  <!--数据库-->  
+  <database ip="localhost" port="3306" dbname="gil"/>  
+  <start jflib="jf.exe"/>  
+  <icon0 point="401" xw="A" x="0.0" y="0.0" width="0.33" height="0.5" iconname="images/conduit0.png"/>  
+  <icon1 point="401" xw="B" x="0.33" y="0.0" width="0.33" height="0.5" iconname="images/conduit1.png"/>  
+  <icon2 point="401" xw="C" x="0.66" y="0.0" width="0.33" height="0.5" iconname="images/conduit2.png"/>  
+  <icon3 point="402" xw="A" x="0.0" y="0.5" width="0.33" height="0.5" iconname="images/conduit3.png"/>  
+  <icon4 point="402" xw="B" x="0.33" y="0.5" width="0.33" height="0.5" iconname="images/conduit4.png"/>  
+  <icon5 point="402" xw="C" x="0.66" y="0.5" width="0.33" height="0.5" iconname="images/conduit5.png"/> 
 </property>

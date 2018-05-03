@@ -1,8 +1,7 @@
 
 package mytools;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
@@ -48,6 +47,8 @@ public class Check2SPinner extends JPanel {
     }
 
     private void init(Date value) {
+//        setMaximumSize(new Dimension(100, 17));
+        setPreferredSize(new Dimension(135,17));
         // 复选框
         checkBox = new JCheckBox();
         checkBox.setBorder(null);
@@ -88,5 +89,6 @@ public class Check2SPinner extends JPanel {
     public void setChoose(Boolean b) {
         checkBox.setSelected(b);
     }
+
 
 }

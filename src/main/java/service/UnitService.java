@@ -97,7 +97,7 @@ public class UnitService {
 
     public static List<UnitBean> getUnits(DataSearchPara para) {
         List<UnitBean> units = new ArrayList<>();
-        if (para.getPlace() != null && para.getPlace().equals("环境温度")) {
+        if ("环境温度".equals(para.getPlace())) {
             units.add(UnitService.getInitTempUnit());
         } else
             for (UnitBean unit : unitList) {

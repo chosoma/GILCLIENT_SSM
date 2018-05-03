@@ -37,7 +37,6 @@ public class Index {
 //         this.common();
 //        this.server();
         this.init();
-
     }
 
     private void common() {
@@ -118,12 +117,12 @@ public class Index {
 
         login.loading(50, "Loading WarnManagerment... ...");
         shell.addItem(WarnManage.getInstance(), new ImageIcon("images/main/warn_24.png"), "警报查询");
-        shell.addItem(HitchManage.getInstance(), new ImageIcon("images/main/warn_24.png"), "故障查询");
-//        login.loading(50, "Loading DataChart... ...");
+        shell.addItem(HitchManage.getInstance(), new ImageIcon("images/main/error.png"), "故障查询");
+//        login.loading(60, "Loading DataChart... ...");
 
 //        shell.addItem(SensorMatch.getInstance(), new ImageIcon("images/main/sensor_24.png"), "仪器配置");
 
-        login.loading(60, "Loading SystemSetup... ...");
+        login.loading(70, "Loading SystemSetup... ...");
 
         shell.addItem(SystemSetup.getInstance(), new ImageIcon("images/main/system_24.png"), "系统设置");
 

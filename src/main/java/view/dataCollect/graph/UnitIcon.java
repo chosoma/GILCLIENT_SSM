@@ -6,9 +6,7 @@ import domain.DataBean;
 import domain.PointBean;
 import domain.UnitBean;
 import domain.WarnBean;
-import view.icon.SF6IconMIN;
-import view.icon.TempIconMIN;
-import view.icon.VariIconMIN;
+import view.icon.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,13 +44,13 @@ public class UnitIcon extends JLabel {
         this.pointBean = pointBean;
         switch (pointBean.getUnitType()) {
             case 1:
-                this.setIcon(new SF6IconMIN());
+                this.setIcon(new MinIcon(MyIconFactory.SF6_28));
                 break;
             case 2:
-                this.setIcon(new VariIconMIN());
+                this.setIcon(new MinIcon(MyIconFactory.vari_28));
                 break;
             case 3:
-                this.setIcon(new TempIconMIN());
+                this.setIcon(new MinIcon(MyIconFactory.temp_28));
                 break;
         }
 
@@ -60,6 +58,7 @@ public class UnitIcon extends JLabel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                ladderFrame.setTitle(pointBean.getPlace());
                 ladderFrame.setVisible(true);
             }
 

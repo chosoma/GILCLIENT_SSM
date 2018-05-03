@@ -6,8 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 
-import javax.swing.Icon;
-import javax.swing.JButton;
+import javax.swing.*;
 
 public class CollectTitleButton extends JButton {
     static Insets insets = new Insets(1, 1, 3, 3);
@@ -41,9 +40,9 @@ public class CollectTitleButton extends JButton {
                 g2.setColor(MyUtil.Component_Border_Color);
                 g2.drawLine(0, 0, width, 0);
                 g2.drawLine(0, 0, 0, height);
-                g2.drawLine(width - 1, 0, width - 1, height);
+                g2.drawLine(0, height-1, width, height-1);
                 g2.setColor(Color.WHITE);
-                g2.fillRect(1, 1, width - 2, height - 1);
+                g2.fillRect(1, 1, width, height - 2);
             } else {
                 if (model.isRollover()) {
                     if (model.isPressed()) {
@@ -85,18 +84,19 @@ public class CollectTitleButton extends JButton {
         return false;
     }
 
-    // 文字位置
-    // public int getVerticalTextPosition() {
-    // return SwingConstants.BOTTOM;
-    // }
-    //
-    // public int getHorizontalTextPosition() {
-    // return SwingConstants.CENTER;
-    // }
+//    文字位置
 
-    // public Color getForeground() {
-    // return Color.WHITE;
-    // }
+    public int getVerticalTextPosition() {
+        return SwingConstants.BOTTOM;
+    }
+
+    public int getHorizontalTextPosition() {
+        return SwingConstants.CENTER;
+    }
+
+    public Color getForeground() {
+        return Color.BLACK;
+    }
 
     public boolean isBorderPainted() {
         return false;

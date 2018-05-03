@@ -245,7 +245,7 @@ public class WarnManage extends JPanel {
         Date date = ca.getTime();
         // 起始时间
         c2s1 = new Check2SPinner(false, date);
-        c2s1.setMaximumSize(new Dimension(165, 17));
+//        c2s1.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s1);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -257,7 +257,7 @@ public class WarnManage extends JPanel {
 
         // 终止时间
         c2s2 = new Check2SPinner(false, date2);
-        c2s2.setMaximumSize(new Dimension(165, 17));
+//        c2s2.setMaximumSize(new Dimension(165, 17));
         toolBarL.add(c2s2);
 
         toolBarL.add(Box.createHorizontalStrut(5));
@@ -330,7 +330,7 @@ public class WarnManage extends JPanel {
 //                int[] ids = new int[selRows.length];
 
                 try {
-                    java.util.Map<WarnBean, List<Date>> warnBeanDateMap = getSelectTable();
+                    Map<WarnBean, List<Date>> warnBeanDateMap = getSelectTable();
                     WarningService.deleteWarn(warnBeanDateMap);
 //                    WarningService.deleteData(ids);
                     JOptionPane.showMessageDialog(null, "警报信息已成功删除", "提示",
@@ -379,7 +379,7 @@ public class WarnManage extends JPanel {
 //                }
 
                 try {
-                    java.util.Map<WarnBean, List<Date>> warnBeanDateMap = getAllTable();
+                    Map<WarnBean, List<Date>> warnBeanDateMap = getAllTable();
 
                     WarningService.deleteWarn(warnBeanDateMap);
 
@@ -443,9 +443,9 @@ public class WarnManage extends JPanel {
         toolBarR.add(print);
     }
 
-    private java.util.Map<WarnBean, List<Date>> getSelectTable() {
+    private Map<WarnBean, List<Date>> getSelectTable() {
         int[] selRows = table.getSelectedRows();
-        java.util.Map<WarnBean, List<Date>> warnBeanListMap = new HashMap<>();
+        Map<WarnBean, List<Date>> warnBeanListMap = new HashMap<>();
         for (int selRow : selRows) {
             String place = (String) table.getValueAt(selRow, 0);
             String xw = (String) table.getValueAt(selRow, 1);
@@ -466,9 +466,9 @@ public class WarnManage extends JPanel {
         return warnBeanListMap;
     }
 
-    private java.util.Map<WarnBean, List<Date>> getAllTable() {
+    private Map<WarnBean, List<Date>> getAllTable() {
         int rowCount = table.getRowCount();
-        java.util.Map<WarnBean, List<Date>> warnBeanListMap = new HashMap<>();
+        Map<WarnBean, List<Date>> warnBeanListMap = new HashMap<>();
         for (int i = 0; i < rowCount; i++) {
             String place = (String) table.getValueAt(i, 0);
             String xw = (String) table.getValueAt(i, 1);

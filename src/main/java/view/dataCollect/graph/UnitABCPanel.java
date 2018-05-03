@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class UnitABCPanel extends JPanel {
-    private java.util.List<UnitBean> unitList;
+    private List<UnitBean> unitList;
     private JLabel jlA;
     private JLabel jlB;
     private JLabel jlC;

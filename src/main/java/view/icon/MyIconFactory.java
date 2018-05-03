@@ -103,8 +103,14 @@ public class MyIconFactory {
         return ShowDebug;
     }
 
-    static Image sound_16, sound_muted_16, showDebug_16, showDebug_muted_16, msg_16, msg_muted_16,
-            temp, vari, SF6, ladder, unknown, SF6_28, temp_28, vari_28, warn, hitchwarn, hitcherror;
+    public static Image sound_16, sound_muted_16, showDebug_16, showDebug_muted_16, msg_16, msg_muted_16,
+            temp, temp_28,
+            vari, vari_28,
+            SF6, SF6_28,
+            ladder, ladder_28,
+            unknown,
+            warn, warn_28,
+            hitchwarn, hitcherror;
 
     static {
         try {
@@ -122,8 +128,10 @@ public class MyIconFactory {
             SF6 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/sf6.png"));
             SF6_28 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/sf6_28.png"));
             ladder = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/ladder.png"));
+            ladder_28 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/ladder_28.png"));
             unknown = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/unknown.png"));
             warn = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/warn.png"));
+            warn_28 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/warn_28.png"));
             hitchwarn = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/hitchwarn.png"));
             hitcherror = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/hitcherror.png"));
             /*

@@ -80,7 +80,7 @@ public class WarningService {
         MyDbUtil.update(sqlInsert, warnBean.getSqlData().toArray());
     }
 
-    public static void deleteWarn(java.util.Map<WarnBean, List<Date>> dataBeanListMap) throws SQLException {
+    public static void deleteWarn(Map<WarnBean, List<Date>> dataBeanListMap) throws SQLException {
         Set<Map.Entry<WarnBean, List<Date>>> entrySet = dataBeanListMap.entrySet();
         for (Map.Entry<WarnBean, List<Date>> entry : entrySet) {
             WarnBean warnBean = entry.getKey();

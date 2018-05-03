@@ -42,36 +42,45 @@ public class HomePanel extends GlassPanel {
         JPanel center = new JPanel();
         center.setLayout(gbl);
         center.setOpaque(false);
-        MySkipButton mtbSF6 = new MySkipButton("SF6", new SF6Icon(), 0);
-        MySkipButton mtbTemp = new MySkipButton("温度", new TempIcon(), 1);
-        MySkipButton mtbVari = new MySkipButton("伸缩节", new VariIcon(), 2);
-        MySkipButton mobGZ = new MySkipButton("故障定位", new WarnIcon(), 4);
-        MyOutButton mobJF = new MyOutButton("局放检测", new UnKnownIcon(), 1);
-        MySkipButton mtbLadder = new MySkipButton("图形", new LadderIcon(), 3);
+        MySkipButton mtbSF6 = new MySkipButton("六氟化硫", new MaxIcon(MyIconFactory.SF6), 0);
+        MySkipButton mtbTemp = new MySkipButton("温升", new MaxIcon(MyIconFactory.temp), 1);
+        MySkipButton mtbVari = new MySkipButton("伸缩节", new MaxIcon(MyIconFactory.vari), 2);
+        MySkipButton mobGZ = new MySkipButton("故障定位", new MaxIcon(MyIconFactory.warn), 4);
+        MyOutButton mobJF = new MyOutButton("局放检测", new MaxIcon(MyIconFactory.unknown), 1);
+        MySkipButton mtbLadder = new MySkipButton("图形", new MaxIcon(MyIconFactory.ladder), 3);
+
+        gbs.gridx = 0;
+        gbs.gridy = 0;
         center.add(mtbSF6);
-        gbs.gridx = 0;
-        gbs.gridy = 0;
         gbl.setConstraints(mtbSF6, gbs);
-        center.add(mtbTemp);
+
         gbs.gridx = 1;
         gbs.gridy = 0;
+        center.add(mtbTemp);
         gbl.setConstraints(mtbTemp, gbs);
-        center.add(mtbVari);
+
         gbs.gridx = 2;
         gbs.gridy = 0;
+        center.add(mtbVari);
         gbl.setConstraints(mtbVari, gbs);
-        center.add(mobGZ);
+
         gbs.gridx = 0;
         gbs.gridy = 1;
-        gbl.setConstraints(mobGZ, gbs);
-        center.add(mobJF);
+        center.add(mtbLadder);
+        gbl.setConstraints(mtbLadder, gbs);
+
+
         gbs.gridx = 1;
         gbs.gridy = 1;
-        gbl.setConstraints(mobJF, gbs);
-        center.add(mtbLadder);
+        center.add(mobGZ);
+        gbl.setConstraints(mobGZ, gbs);
+
+
         gbs.gridx = 2;
         gbs.gridy = 1;
-        gbl.setConstraints(mtbLadder, gbs);
+        center.add(mobJF);
+        gbl.setConstraints(mobJF, gbs);
+
         this.add(center, BorderLayout.CENTER);
 
         JPanel bottom = new GlassPanel(new BorderLayout(), 0.3f);

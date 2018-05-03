@@ -15,7 +15,7 @@ public class DataModel_Hitch extends DataManageModel {
         Vector<String> column = new Vector<String>();
         column.add("监测点");
         column.add("相位");
-        column.add("警报值(mV)");
+        column.add("警报值");
         column.add("电池电压(V)");
         column.add("时间");
         this.setDataVector(row, column);

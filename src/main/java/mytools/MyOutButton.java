@@ -122,11 +122,11 @@ public class MyOutButton extends JButton {
     }
 
     public Color getForeground() {
-        return Color.BLACK;
+        return Color.BLUE;
     }
 
     public Font getFont() {
-        return MyUtil.TitleFont;
+        return MyUtil.TitleFont30;
     }
 
     public Insets getInsets() {

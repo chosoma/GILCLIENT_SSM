@@ -48,47 +48,57 @@ public class System2WdSet extends JPanel {
         content.setBorder(MyUtil.Component_Border);
         this.add(content);
 
-        JLabel jlb1 = new JLabel("第一温度：", JLabel.RIGHT);
-        jlb1.setBounds(100, 100, 100, 30);
+        int x = 40;
+        int y = 60; int yheight = 60;
+        int widthlabel = 100;
+        int widthcombox = 300;
+        int height = 30;
+
+        JLabel jlb1 = new JLabel("第一温度：", JLabel.LEFT);
+        jlb1.setBounds(x, y, widthlabel, height);
         jlb1.setFont(MyUtil.FONT_20);
         content.add(jlb1);
-
+        y += yheight;
+        JLabel jlb2 = new JLabel("周期：", JLabel.LEFT);
+        jlb2.setFont(MyUtil.FONT_20);
+        jlb2.setBounds(x, y, widthlabel, height);
+        content.add(jlb2);
+        y += yheight;
+        JLabel jlb3 = new JLabel("第二温度：", JLabel.LEFT);
+        jlb3.setFont(MyUtil.FONT_20);
+        jlb3.setBounds(x, y, widthlabel, height);
+        content.add(jlb3);
+        y += yheight;
+        JLabel jlb4 = new JLabel("周期：", JLabel.LEFT);
+        jlb4.setFont(MyUtil.FONT_20);
+        jlb4.setBounds(x, y, widthlabel, height);
+        content.add(jlb4);
+        x = 160;
+        y = 60;
         jcbWd1 = new JComboBox<Byte>(wds);
-        jcbWd1.setBounds(200, 100, 60, 30);
+        jcbWd1.setBounds(x, y, widthcombox, height);
         jcbWd1.setFont(MyUtil.FONT_20);
         jcbWd1.setEnabled(false);
         content.add(jcbWd1);
-
-        JLabel jlb2 = new JLabel("周期：", JLabel.RIGHT);
-        jlb2.setFont(MyUtil.FONT_20);
-        jlb2.setBounds(280, 100, 60, 30);
-        content.add(jlb2);
+        y += yheight;
 
         jcbJg1 = new JComboBox<Byte>(jgs);
         jcbJg1.setFont(MyUtil.FONT_20);
-        jcbJg1.setBounds(340, 100, 60, 30);
+        jcbJg1.setBounds(x, y, widthcombox, height);
         jcbJg1.setEnabled(false);
         content.add(jcbJg1);
-
-        JLabel jlb3 = new JLabel("第二温度：", JLabel.RIGHT);
-        jlb3.setFont(MyUtil.FONT_20);
-        jlb3.setBounds(100, 160, 100, 30);
-        content.add(jlb3);
+        y += yheight;
 
         jcbWd2 = new JComboBox<Byte>(wds);
         jcbWd2.setFont(MyUtil.FONT_20);
-        jcbWd2.setBounds(200, 160, 60, 30);
+        jcbWd2.setBounds(x, y, widthcombox, height);
         jcbWd2.setEnabled(false);
         content.add(jcbWd2);
-
-        JLabel jlb4 = new JLabel("周期：", JLabel.RIGHT);
-        jlb4.setFont(MyUtil.FONT_20);
-        jlb4.setBounds(280, 160, 60, 30);
-        content.add(jlb4);
+        y += yheight;
 
         jcbJg2 = new JComboBox<Byte>(jgs);
         jcbJg2.setFont(MyUtil.FONT_20);
-        jcbJg2.setBounds(340, 160, 60, 30);
+        jcbJg2.setBounds(x, y, widthcombox, height);
         jcbJg2.setEnabled(false);
         content.add(jcbJg2);
 
@@ -104,7 +114,6 @@ public class System2WdSet extends JPanel {
         Dimension buttonSize = new Dimension(60, 30);
 
         edit = new ChangeButton("修改", new ImageIcon("images/edit.png"));
-        edit.setToolTipText("修改连接设置");
         edit.setPreferredSize(buttonSize);
         edit.addActionListener(new ActionListener() {
             @Override
@@ -157,7 +166,6 @@ public class System2WdSet extends JPanel {
         toolbar.add(apply);
 
         cancel = new ChangeButton("取消", new ImageIcon("images/cancel.png"));
-        cancel.setToolTipText("取消修改");
         cancel.setEnabled(false);
         cancel.setPreferredSize(buttonSize);
         cancel.addActionListener(new ActionListener() {

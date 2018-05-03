@@ -2,9 +2,11 @@
 <pds>
     <bg src="Main.png"/>
     <objects>
-        <circle-marker desc="" id="IED1" x="417" y="236" ip="192.168.0.110" ch="0"/>
-        <circle-marker desc="" id="IED1" x="582" y="400" ip="192.168.0.110" ch="3"/>
-        <circle-marker desc="" id="IED1" x="498" y="401" ip="192.168.0.110" ch="2"/>
-        <circle-marker desc="" id="IED1" x="324" y="403" ip="192.166.0.110" ch="1"/>
+        <circle-marker desc="" id="IED1" x="398" y="538" ip="192.168.1.101" ch="0"/>
+        <circle-marker desc="" id="IED4" x="430" y="159" ip="192.168.1.101" ch="3"/>
+        <circle-marker desc="" id="IED3" x="398" y="594" ip="192.168.1.101" ch="2"/>
+        <circle-marker desc="" id="IED2" x="398" y="567" ip="192.168.1.101" ch="1"/>
+        <circle-marker desc="" id="IED6" x="432" y="215" ip="192.168.1.101" ch="5"/>
+        <circle-marker desc="" id="IED5" x="431" y="188" ip="192.168.1.101" ch="4"/>
     </objects>
 </pds>

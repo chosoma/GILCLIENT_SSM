@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CommGPRS extends JPanel  {
+public class CommGPRS extends JPanel {
 
     public CommGPRS() {
         this.setPreferredSize(new Dimension(500, 360));
@@ -27,7 +27,7 @@ public class CommGPRS extends JPanel  {
 
 
         jbtOpen1 = new ClickButton("启动服务");
-        jbtOpen1.setPreferredSize(new Dimension(100, 30));
+        jbtOpen1.setPreferredSize(new Dimension(100,  30));
         jbtOpen1.setSize(new Dimension(100, 30));
         jbtOpen1.setFont(MyUtil.FONT_20);
         this.add(jbtOpen1);
@@ -60,10 +60,18 @@ public class CommGPRS extends JPanel  {
                                 jlbOpen1.setText("服务已启动");
                                 SystemSetup.getInstance().setEditable(true);
                             } catch (java.net.BindException be) {
-                                JOptionPane.showMessageDialog(null, "端口被占用或程序已启动", "失败", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        "端口被占用或程序已启动",
+                                        "失败",
+                                        JOptionPane.ERROR_MESSAGE);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                JOptionPane.showMessageDialog(null, e.getMessage(), "服务启动失败", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        e.getMessage(),
+                                        "服务启动失败",
+                                        JOptionPane.ERROR_MESSAGE);
                             } finally {
                                 jlbOpen1.setEnabled(true);
                                 jbtOpen1.setEnabled(true);
@@ -87,17 +95,17 @@ public class CommGPRS extends JPanel  {
         gbs.fill = GridBagConstraints.BOTH;
         gbs.gridwidth = 1;
         gbs.gridheight = 1;
-        gbs.insets = new Insets(50,50,0,50);
+        gbs.insets = new Insets(50, 50, 0, 50);
         gbs.weightx = 1;
         gbs.weighty = 1;
         gbs.gridx = 1;
         gbs.gridy = 1;
         gbl.setConstraints(jbtOpen1, gbs);
 
-        gbs.gridy ++;
+        gbs.gridy++;
         gbl.setConstraints(jlbOpen1, gbs);
 
-        gbs.gridy ++;
+        gbs.gridy++;
         gbl.setConstraints(jlbWait1, gbs);
 
         this.setLayout(gbl);

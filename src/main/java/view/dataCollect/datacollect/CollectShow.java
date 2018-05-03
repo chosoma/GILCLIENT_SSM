@@ -1,6 +1,8 @@
 package view.dataCollect.datacollect;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +11,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import domain.WarnBean;
+import mytools.CollectTitleButton;
 import mytools.MyUtil;
 
 import domain.DataBean;
 import view.dataCollect.WarnPanel;
+import view.icon.*;
 
 public class CollectShow extends JPanel {
 
@@ -44,6 +48,90 @@ public class CollectShow extends JPanel {
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
         this.loadView();
+        this.initbutton();
+    }
+    private JPanel buttonPanel;
+
+    public void myButtonGroup(int type, String name) {
+        CollectTitleButton jb = (CollectTitleButton) buttonPanel.getComponent(type);
+        myButtonGroup(jb, name);
+    }
+
+    private void myButtonGroup(ActionEvent e, String name) {
+        CollectTitleButton jb = (CollectTitleButton) e.getSource();
+        myButtonGroup(jb, name);
+    }
+
+    private void myButtonGroup(CollectTitleButton jb, String name) {
+        if (!jb.isSelected()) {
+            jb.setSelected(true);
+            for (Component b : buttonPanel.getComponents()) {
+                if (b != jb && ((CollectTitleButton) b).isSelected()) {
+                    ((CollectTitleButton) b).setSelected(false);
+                }
+            }
+            ChartView.getInstance().showPane(name);
+        }
+    }
+    private void initbutton() {
+        buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.white);
+        buttonPanel.setPreferredSize(new Dimension(70,getWidth()));
+        buttonPanel.setLayout(new FlowLayout());
+//        buttonPanel.setOpaque(false);
+        this.add(buttonPanel, BorderLayout.WEST);
+
+        Dimension buttonsize = new Dimension(60, 60);
+        JButton jbSF6 = new CollectTitleButton("六氟化硫",new MinIcon(MyIconFactory.SF6_28));
+        jbSF6.setPreferredSize(buttonsize);
+        jbSF6.setSelected(true);
+        jbSF6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myButtonGroup(e, "SF6");
+            }
+        });
+        buttonPanel.add(jbSF6);
+
+        JButton jbWd = new CollectTitleButton("温升", new MinIcon(MyIconFactory.temp_28));
+        jbWd.setPreferredSize(buttonsize);
+        jbWd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myButtonGroup(e, "WD");
+            }
+        });
+        buttonPanel.add(jbWd);
+
+        JButton jbGy = new CollectTitleButton("伸缩节",new MinIcon(MyIconFactory.vari_28));
+        jbGy.setPreferredSize(buttonsize);
+        jbGy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myButtonGroup(e, "SSJ");
+            }
+        });
+        buttonPanel.add(jbGy);
+
+        JButton jbSw = new CollectTitleButton("图形",new MinIcon(MyIconFactory.ladder_28));
+        jbSw.setPreferredSize(buttonsize);
+        jbSw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myButtonGroup(e, "TX");
+            }
+        });
+        buttonPanel.add(jbSw);
+
+        JButton jbHit = new CollectTitleButton("故障定位",new MinIcon(MyIconFactory.warn_28));
+        jbHit.setPreferredSize(buttonsize);
+        jbHit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myButtonGroup(e, "GZ");
+            }
+        });
+        buttonPanel.add(jbHit);
     }
 
 

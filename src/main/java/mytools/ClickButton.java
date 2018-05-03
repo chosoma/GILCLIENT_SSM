@@ -42,24 +42,24 @@ public class ClickButton extends JButton {
 		int width = getWidth();
 		int height = getHeight();
 		if (isEnabled()) {
-			MyUtil.DrawBorder(g2, new Color(32, 100, 202), width, height);
+			MyUtil.DrawBorder(g2, new Color(22, 106, 90), width, height); // 32.100.202
 			if (model.isRollover()) {
 				if (model.isPressed()) {
-					g2.setColor(new Color(66, 113, 201));
+					g2.setColor(new Color(27, 134, 114));//66.113.201
 				} else {
 					g2.setPaint(new GradientPaint(insets.left, insets.top,
-							new Color(127, 175, 247), insets.left, height
-							- insets.bottom, new Color(66, 113, 201)));
+							new Color(30, 161, 139), insets.left, height//127.175.247
+							- insets.bottom, new Color(27, 134, 114)));//66.113.201
 				}
 				g2.fillRect(insets.left, insets.top, width - insets.left
 						- insets.right, height - insets.top - insets.bottom);
 			} else {
-				g2.setColor(new Color(134, 172, 228));
+				g2.setColor(new Color(32, 169, 147));//134.172.228
 				g2.drawLine(insets.left, insets.top, width - insets.left
 						- insets.right, insets.top);
 				g2.setPaint(new GradientPaint(insets.left, insets.top + 1,
-						new Color(98, 147, 221), insets.left, height
-						- insets.bottom, new Color(66, 113, 201)));
+						new Color(30, 161, 139), insets.left, height//98.147.221
+						- insets.bottom, new Color(27, 134, 114)));//66.113.201
 				g2.fillRect(insets.left, insets.top + 1, width - insets.left
 						- insets.right, height - insets.top - insets.bottom - 1);
 			}
