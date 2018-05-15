@@ -101,6 +101,9 @@ public class UnitService {
             units.add(UnitService.getInitTempUnit());
         } else
             for (UnitBean unit : unitList) {
+                if (para.getUnitType() != unit.getType()) {
+                    continue;
+                }
                 if (para.getPlace() != null && para.getXw() != null) {
                     if (para.getPlace().equals(unit.getPlace()) && para.getXw().equals(unit.getXw())) {
                         units.add(unit);

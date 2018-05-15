@@ -451,17 +451,17 @@ public class AbcUnitView extends JPanel {
 
     private void SF6CheckWarning(WarnBean warnBean, UnitBean unit, DataBean data) {
         if (data.isLowPres()) {
-            warnBean.setInfo(" 低压报警");
+            warnBean.setInfo(" 低压报警 ");
         }
         if (data.isLowLock()) {
-            warnBean.setInfo(" 低压闭锁");
+            warnBean.setInfo(" 低压闭锁 ");
         }
 
         boolean[] flags = new boolean[3];
 
         if (unit.getWarnTemp() != null && data.getTemp() > unit.getWarnTemp()) {
             flags[0] = true;
-            warnBean.setInfo(" 温度过高");
+            warnBean.setInfo(" 温度过高 :"+data.getTemp());
         }
 
         if (unit.getMaxden() != null && unit.getMinden() != null) {
@@ -469,9 +469,9 @@ public class AbcUnitView extends JPanel {
                 flags[1] = true;
                 if (unit.getMaxden() != null && unit.getMinden() != null) {
                     if (data.getDen() > unit.getMaxden()) {
-                        warnBean.setInfo(" 密度过高");
+                        warnBean.setInfo(" 密度过高 :"+data.getDen()+"mPa");
                     } else if (data.getDen() < unit.getMinden()) {
-                        warnBean.setInfo(" 密度过低");
+                        warnBean.setInfo(" 密度过低 :"+data.getDen()+"mPa");
                     }
                 }
             }
@@ -481,9 +481,9 @@ public class AbcUnitView extends JPanel {
                 flags[2] = true;
                 if (unit.getMaxper() != null && unit.getMinper() != null) {
                     if (data.getPres() > unit.getMaxper()) {
-                        warnBean.setInfo(" 压力过高");
+                        warnBean.setInfo(" 压力过高 :"+data.getPres()+"mPa");
                     } else if (data.getPres() < unit.getMinper()) {
-                        warnBean.setInfo(" 压力过低");
+                        warnBean.setInfo(" 压力过低 :"+data.getPres()+"mPa");
                     }
                 }
             }
@@ -526,7 +526,7 @@ public class AbcUnitView extends JPanel {
 //        } else
         if (unit.getWarnTemp() != null && data.getTemp() > unit.getWarnTemp()) {
             flag = true;
-            warnBean.setInfo(" 温度过高");
+            warnBean.setInfo(" 温升过高 :"+data.getTemp()+"℃");
         }
         if (flag) {
             flags.add(true);
@@ -562,11 +562,11 @@ public class AbcUnitView extends JPanel {
         if (unit.getMaxvari() != null && unit.getMinvari() != null) {
             if (vari > unit.getMaxvari()) {
                 flag = true;
-                warnBean.setInfo(" 超出最大范围");
+                warnBean.setInfo(" 超出最大范围 :"+data.getVari()+"mm");
             }
             if (vari < unit.getMinvari()) {
                 flag = true;
-                warnBean.setInfo(" 超出最小范围");
+                warnBean.setInfo(" 超出最小范围 :"+data.getVari()+"mm");
             }
         }
         JLabel jLabel = getVariLabel(unit);

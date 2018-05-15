@@ -201,6 +201,7 @@ public class CollectShow extends JPanel {
         this.repaint();
     }
 
+    
     public synchronized void receInitTemp(DataBean data) {
         chartView.receInitTemp(data);
     }
@@ -211,7 +212,6 @@ public class CollectShow extends JPanel {
     public synchronized void receData(DataBean data, boolean flag) {
         chartView.receDatas(flag, data);
     }
-
 
 
     public synchronized void receDatas(List<DataBean> dataList, boolean flag) {

@@ -117,7 +117,7 @@ public class Index {
 
         login.loading(50, "Loading WarnManagerment... ...");
         shell.addItem(WarnManage.getInstance(), new ImageIcon("images/main/warn_24.png"), "警报查询");
-        shell.addItem(HitchManage.getInstance(), new ImageIcon("images/main/error.png"), "故障查询");
+//        shell.addItem(HitchManage.getInstance(), new ImageIcon("images/main/error.png"), "故障查询");
 //        login.loading(60, "Loading DataChart... ...");
 
 //        shell.addItem(SensorMatch.getInstance(), new ImageIcon("images/main/sensor_24.png"), "仪器配置");

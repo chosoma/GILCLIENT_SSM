@@ -1,6 +1,7 @@
 package domain;
 
 public class CountBean {
+	
     private int count;
 
     public int getCount() {

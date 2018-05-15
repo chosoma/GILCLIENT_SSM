@@ -125,7 +125,7 @@ public class Configure {
         LocalPort = "8088";
         String ip = "localhost", port = "3306", dbname = "gil";
         SQLurl = "jdbc:mysql://" + ip + ":" + port + "/" + dbname;
-        wdPeriod = new WdPeriod((byte) 40, (byte) 50, (byte) 05, (byte) 01);
+        wdPeriod = new WdPeriod((byte) 100, (byte) 100, (byte) 240, (byte) 240);
         Preheat = 80000;
 //        DelayGPRS = new DelayBean("30000", "20000", "10000", "300000");
         jfstr = "jf.exe";

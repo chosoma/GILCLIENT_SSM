@@ -46,7 +46,7 @@ public class HomePanel extends GlassPanel {
         MySkipButton mtbTemp = new MySkipButton("温升", new MaxIcon(MyIconFactory.temp), 1);
         MySkipButton mtbVari = new MySkipButton("伸缩节", new MaxIcon(MyIconFactory.vari), 2);
         MySkipButton mobGZ = new MySkipButton("故障定位", new MaxIcon(MyIconFactory.warn), 4);
-        MyOutButton mobJF = new MyOutButton("局放检测", new MaxIcon(MyIconFactory.unknown), 1);
+        MyOutButton mobJF = new MyOutButton("局放监测", new MaxIcon(MyIconFactory.unknown), 1);
         MySkipButton mtbLadder = new MySkipButton("图形", new MaxIcon(MyIconFactory.ladder), 3);
 
         gbs.gridx = 0;

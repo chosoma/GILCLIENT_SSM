@@ -568,7 +568,7 @@ public class DataManage extends JPanel {
 //            }
 //            long searchstart = System.currentTimeMillis();
 
-//            List<Vector<Object>> datas = DataManageService.getTableWarn(para);
+//            List<Vector<Object>> datas = DataManageServic3e.getTableWarn(para);
             List<Vector<Object>> datas = DataManageService.getTableData(para, pageBean);
             //system.out.println("数据长度:" + datas.size());
 //            long searchend = System.currentTimeMillis();
@@ -645,15 +645,19 @@ public class DataManage extends JPanel {
         }
         para.setType(type);
         switch (type) {
-            case "SF6":
+            case SensorService.Sensor_SF6:
                 para.setUnitType((byte) 1);
                 break;
-            case "伸缩节":
+            case SensorService.Sensor_SSJ:
                 para.setUnitType((byte) 2);
                 break;
-            case "温度":
+            case SensorService.Sensor_WD:
                 para.setUnitType((byte) 3);
                 break;
+            case SensorService.Sensor_HITCH:
+            	para.setUnitType((byte) 4);
+            	break;
+                
         }
         //system.out.println("type:" + para.getUnitType());
         int sjbhIdenx = jcbPlace.getSelectedIndex();
@@ -694,7 +698,7 @@ public class DataManage extends JPanel {
                 jcbPlace.addItem(sjbh);
             }
         }
-        if (type.equals("温度")) {
+        if (type.equals(SensorService.Sensor_WD)) {
             jcbPlace.addItem("环境温度");
         }
         jcbXW.setSelectedIndex(0);

@@ -8,6 +8,7 @@ import domain.WarnBean;
 import protocol.Protocol;
 import service.PointService;
 import service.UnitService;
+import service.WarningService;
 import view.Shell;
 import view.dataCollect.datacollect.CollectShow;
 
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -38,7 +40,7 @@ public class HitchView extends JPanel {
     private void initHitchWarning() {
         hitchWarningPanel = new JPanel(new FlowLayout());
         hitchWarningPanel.add(new JLabel(new ImageIcon("images/main/warn_24.png")));
-        hitchWarningPanel.add(new JLabel("正在报警", JLabel.CENTER));
+        hitchWarningPanel.add(new JLabel("发生故障", JLabel.CENTER));
         hitchWarningPanel.setVisible(false);
         this.add(hitchWarningPanel);
         hitchWarningPanel.setBounds(0, 0, 100, 33);
@@ -137,9 +139,15 @@ public class HitchView extends JPanel {
                 warnBean.setPointBean(PointService.getUnitPoint(hitchicon.getPoint()));
                 warnBean.setXw(hitchicon.getXw());
                 warnBean.setDate(hitchBean.getDate());
-                warnBean.setInfo("故障值:" + String.valueOf(hitchBean.getHitchvol()));
+                warnBean.setInfo("发生故障--故障值:" + String.valueOf(hitchBean.getHitchvol()));
                 hitchicon.setHitchValue(String.valueOf(hitchBean.getHitchvol()));
                 CollectShow.getInstance().addWarning(warnBean);
+                try {
+					WarningService.saveWarn(warnBean);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 Shell.getInstance().showHitch();
             }
         }
@@ -161,7 +169,7 @@ public class HitchView extends JPanel {
                 while (iterator.hasNext()) {
                     DataBean hitchBean = iterator.next();
                     if (hitch.getUnittype() == hitchBean.getUnitType() && hitch.getUnitnumber() == hitchBean.getUnitNumber()) {
-                        hitch.setHitchValue("无报警");
+                        hitch.setHitchValue("无故障");
                         hitch.setHitchIconLabelVisible(false);
                         iterator.remove();
                     }

@@ -18,18 +18,20 @@ public class SystemSetup extends JPanel {
     private static SystemSetup S2S = null;
     //    private CommGPRS sys2comm;
     private System2Period sys2per;//采集周期
-    private System2WdSet sys2Wd;//温度频率
+//    private System2WdSet sys2Wd;//温度频率
     private System2WarnValue sys2warn;//报警值设置
     private System2PassWord sys2pw;//修改密码
     private System2User sys2u;//用户管理
     private JPanel leftPanel, rightPanel;
-    private JLabel[] leftLabels = new JLabel[5];    //0通讯 1采集周期 2温度频率 3报警设置 4用户管理 5修改密码
+    private JLabel[] leftLabels = new JLabel[4];    //0通讯 1采集周期 2温度频率 3报警设置 4用户管理 5修改密码
     private String[] labelString = new String[]{
 //            "通讯设置",
-            "采集周期", "温度频率", "报警设置", "用户管理", "修改密码"};
+            "采集周期", //            "温度频率", 
+            "报警设置", "用户管理", "修改密码"};
     private String[] rightString = new String[]{
 //            "通 讯 设 置",
-            "采 集 周 期", "温 度 频 率", "报 警 设 置", "用 户 管 理", "修 改 密 码"};
+            "采 集 周 期", //            "温 度 频 率", 
+            "报 警 设 置", "用 户 管 理", "修 改 密 码"};
     private JLabel titleLabel;
     private boolean isInitialize = false;// 初始化标志，用于首次打开显示时用
     private int dividerLocation = 250;// 分割条位置
@@ -81,7 +83,7 @@ public class SystemSetup extends JPanel {
         sys2pw = new System2PassWord();
         sys2warn = new System2WarnValue();
         sys2u = new System2User();
-        sys2Wd = new System2WdSet();
+//        sys2Wd = new System2WdSet();
         rightPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5000, 10));
         rightPanel.setOpaque(false);
         rightPanel.add(titleLabel, 0);
@@ -111,15 +113,15 @@ public class SystemSetup extends JPanel {
                             jPanel = sys2per;
                             break;
                         case 1:
-                            jPanel = sys2Wd;
-                            break;
-                        case 2:
+//                            jPanel = sys2Wd;
+//                            break;
+//                        case 2:
                             jPanel = sys2warn;
                             break;
-                        case 3:
+                        case 2:
                             jPanel = sys2u;
                             break;
-                        case 4:
+                        case 3:
                             jPanel = sys2pw;
                             break;
                     }

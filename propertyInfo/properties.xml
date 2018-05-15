@@ -4,7 +4,7 @@
   <!--采集-->  
   <collection> 
     <!-- 温度频率-->  
-    <wdPeriod wd1="40" wd2="41" jg1="5" jg2="1"/> 
+    <wdPeriod wd1="100" wd2="100" jg1="60" jg2="60"/> 
   </collection>  
   <!--通讯-->  
   <communication> 

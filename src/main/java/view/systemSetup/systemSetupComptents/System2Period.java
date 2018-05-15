@@ -143,10 +143,9 @@ public class System2Period extends JPanel {
         center.add(jldwthen);
         x = 160;
         y += yheight;
-        Integer[] integer = new Integer[255];
-        for (int i = 0; i < integer.length; i++) {
-            integer[i] = i + 1;
-        }
+        Integer[] integer = new Integer[] {
+        		10,20,30,45,60,120,240
+        };
 
         jcbPeriod = new JComboBox<Integer>(integer);
 //        jcbPeriod.setBorder(new TitledBorder(new EmptyBorder(0, 0, 0, 0), "周期选择", TitledBorder.LEFT, TitledBorder.TOP, MyUtil.FONT_15, Color.BLACK));
@@ -231,6 +230,7 @@ public class System2Period extends JPanel {
             }
             jlPrimaryPeriod.setText(String.valueOf(amtempUnit.getPeriod() & 0xff));
         } else {
+        	jcbXW.setEnabled(true);
             if (edit.isEnabled()) {
                 jcbPlace.setEnabled(false);
                 jcbXW.setEnabled(false);

@@ -6,7 +6,9 @@ import java.util.List;
 public class DataSearchPara {
 
     private String type, place, xw;//类型
-    private Byte unitType, unitNumber;//编号
+    private Byte unitType
+//            , unitNumber
+            ;//编号
     private Date t1, t2;
     private List<UnitBean> units;
 //    private List<HitchUnitBean> hitchunits;
@@ -35,13 +37,13 @@ public class DataSearchPara {
         this.unitType = unitType;
     }
 
-    public Byte getUnitNumber() {
-        return unitNumber;
-    }
-
-    public void setUnitNumber(Byte unitNumber) {
-        this.unitNumber = unitNumber;
-    }
+//    public Byte getUnitNumber() {
+//        return unitNumber;
+//    }
+//
+//    public void setUnitNumber(Byte unitNumber) {
+//        this.unitNumber = unitNumber;
+//    }
 
     public String getType() {
         return type;
@@ -90,7 +92,7 @@ public class DataSearchPara {
                 ", place='" + place + '\'' +
                 ", xw='" + xw + '\'' +
                 ", unitType=" + unitType +
-                ", unitNumber=" + unitNumber +
+//                ", unitNumber=" + unitNumber +
                 ", t1=" + t1 +
                 ", t2=" + t2 +
                 '}';

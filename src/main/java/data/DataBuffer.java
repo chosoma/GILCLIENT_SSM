@@ -76,6 +76,9 @@ public class DataBuffer {
 
             lock.lock();
             try {
+            	
+//            	int count = 0;
+            	
                 while (alive) {
                     // 判断缓冲区数据是否达到最小数据长度
                     if (buffer.size() == 0) {
@@ -91,6 +94,7 @@ public class DataBuffer {
                             continue;
                         }
                     }
+//                    System.out.println("count:"+count++);
                     RawData rawdata = buffer.remove(0);
                     byte[] data0 = rawdata.getData();
                     Date time = rawdata.getTime();

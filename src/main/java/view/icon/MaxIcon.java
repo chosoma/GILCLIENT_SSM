@@ -1,6 +1,5 @@
 package view.icon;
 
-import org.eclipse.swt.internal.win32.ICONINFO;
 
 import java.awt.*;
 import java.io.Serializable;

@@ -10,7 +10,7 @@ public class UnitBean implements Comparable<UnitBean> {
     private float initvari, x, y;
     private Float maxden, minden, maxper, minper, SF6Temp;
     private Float warnTemp;
-    private boolean isinit;
+    private boolean isinit,tempflag;
     private Float minvari, maxvari;
     private byte vollevel;
     private Float volwarn;
@@ -18,7 +18,15 @@ public class UnitBean implements Comparable<UnitBean> {
     private String xw, place;
 
 
-    @Override
+    public boolean isTempflag() {
+		return tempflag;
+	}
+
+	public void setTempflag(boolean tempflag) {
+		this.tempflag = tempflag;
+	}
+
+	@Override
     public String toString() {
         return "UnitBean{" +
                 "gatewaytype=" + gatewaytype +
