@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import data.DataFactory;
 import data.FormatTransfer;
 import domain.PointBean;
 import domain.UnitBean;
@@ -124,11 +125,12 @@ public class AbcUnitView extends JPanel {
             warnBean.setDate(data.getDate());
             CollectShow.getInstance().addWarning(warnBean);
             ChartView.getInstance().startWarn(warnBean);
-            try {
-                WarningService.saveWarn(warnBean);
-            } catch (SQLException ignored) {
-
-            }
+//            try {
+//                WarningService.saveWarn(warnBean);
+//            } catch (SQLException ignored) {
+//                ignored.printStackTrace();
+//            }
+            DataFactory.getInstance().addWarning(warnBean);
         }
         repaint();
     }
@@ -367,15 +369,15 @@ public class AbcUnitView extends JPanel {
         }
         for (UnitBean unit : units) {
             float initvari = unit.getInitvari();
-            getInitLabel(unit).setText(String.valueOf(initvari));
+            getInitLabel(unit).setText(FormatTransfer.float2String(initvari));
         }
     }
 
     public void setInitTemp(float temp) {
         setAmtemp(temp);
-        jlas[5].setText(String.valueOf(temp));
-        jlbs[5].setText(String.valueOf(temp));
-        jlcs[5].setText(String.valueOf(temp));
+        jlas[5].setText(FormatTransfer.float2String(temp));
+        jlbs[5].setText(FormatTransfer.float2String(temp));
+        jlcs[5].setText(FormatTransfer.float2String(temp));
     }
 
     private UnitBean getUnitBean(int index) {
@@ -430,7 +432,7 @@ public class AbcUnitView extends JPanel {
             JOptionPane.showMessageDialog(null, "设置失败,请稍后重试", "失败", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        getInitLabel(unitBean).setText(String.valueOf(unitBean.getInitvari()));
+        getInitLabel(unitBean).setText(FormatTransfer.float2String(unitBean.getInitvari()));
         getVariLabel(unitBean).setText("0.0");
         getVariLabel(unitBean).setBackground(colorB);
     }
@@ -461,7 +463,7 @@ public class AbcUnitView extends JPanel {
 
         if (unit.getWarnTemp() != null && data.getTemp() > unit.getWarnTemp()) {
             flags[0] = true;
-            warnBean.setInfo(" 温度过高 :"+data.getTemp());
+            warnBean.setInfo(" 温度过高 :" + data.getTemp());
         }
 
         if (unit.getMaxden() != null && unit.getMinden() != null) {
@@ -469,9 +471,9 @@ public class AbcUnitView extends JPanel {
                 flags[1] = true;
                 if (unit.getMaxden() != null && unit.getMinden() != null) {
                     if (data.getDen() > unit.getMaxden()) {
-                        warnBean.setInfo(" 密度过高 :"+data.getDen()+"mPa");
+                        warnBean.setInfo(" 密度过高 :" + data.getDen() + "mPa");
                     } else if (data.getDen() < unit.getMinden()) {
-                        warnBean.setInfo(" 密度过低 :"+data.getDen()+"mPa");
+                        warnBean.setInfo(" 密度过低 :" + data.getDen() + "mPa");
                     }
                 }
             }
@@ -481,9 +483,9 @@ public class AbcUnitView extends JPanel {
                 flags[2] = true;
                 if (unit.getMaxper() != null && unit.getMinper() != null) {
                     if (data.getPres() > unit.getMaxper()) {
-                        warnBean.setInfo(" 压力过高 :"+data.getPres()+"mPa");
+                        warnBean.setInfo(" 压力过高 :" + data.getPres() + "mPa");
                     } else if (data.getPres() < unit.getMinper()) {
-                        warnBean.setInfo(" 压力过低 :"+data.getPres()+"mPa");
+                        warnBean.setInfo(" 压力过低 :" + data.getPres() + "mPa");
                     }
                 }
             }
@@ -526,7 +528,7 @@ public class AbcUnitView extends JPanel {
 //        } else
         if (unit.getWarnTemp() != null && data.getTemp() > unit.getWarnTemp()) {
             flag = true;
-            warnBean.setInfo(" 温升过高 :"+data.getTemp()+"℃");
+            warnBean.setInfo(" 温升过高 :" + data.getTemp() + "℃");
         }
         if (flag) {
             flags.add(true);
@@ -562,11 +564,11 @@ public class AbcUnitView extends JPanel {
         if (unit.getMaxvari() != null && unit.getMinvari() != null) {
             if (vari > unit.getMaxvari()) {
                 flag = true;
-                warnBean.setInfo(" 超出最大范围 :"+data.getVari()+"mm");
+                warnBean.setInfo(" 超出最大范围 :" + data.getVari() + "mm");
             }
             if (vari < unit.getMinvari()) {
                 flag = true;
-                warnBean.setInfo(" 超出最小范围 :"+data.getVari()+"mm");
+                warnBean.setInfo(" 超出最小范围 :" + data.getVari() + "mm");
             }
         }
         JLabel jLabel = getVariLabel(unit);
@@ -622,14 +624,14 @@ public class AbcUnitView extends JPanel {
         switch (data.getUnitType()) {
             case 1:
 
-                getTempLabel(unit).setText(String.valueOf(data.getTemp()));
+                getTempLabel(unit).setText(FormatTransfer.float2String2(data.getTemp()));
 
-                getPresLabel(unit).setText(String.valueOf(data.getPres()));
+                getPresLabel(unit).setText(FormatTransfer.float2String2(data.getPres()));
                 if (data.isLowPres()) {
                     flags.add(true);
                 }
 
-                getDenLabel(unit).setText(String.valueOf(data.getDen()));
+                getDenLabel(unit).setText(FormatTransfer.float2String2(data.getDen()));
                 if (data.isLowLock()) {
                     flags.add(true);
                 }
@@ -640,7 +642,7 @@ public class AbcUnitView extends JPanel {
                 if (unit.getInitvari() != 0) {
                     vari = FormatTransfer.newScale(data.getVari(), unit.getInitvari());
                 }
-                getVariLabel(unit).setText(String.valueOf(vari));
+                getVariLabel(unit).setText(FormatTransfer.float2String(vari));
                 break;
             case 3:
                 float temp = data.getTemp();
@@ -650,12 +652,12 @@ public class AbcUnitView extends JPanel {
 //                if (temp < 0) {
 //                    temp = 0;
 //                }
-                getTempLabel(unit).setText(String.valueOf(temp));
+                getTempLabel(unit).setText(FormatTransfer.float2String(temp));
                 break;
             default:
                 return;
         }
-        getBatlvLabel(unit).setText(String.valueOf(data.getBatlv()));
+        getBatlvLabel(unit).setText(FormatTransfer.float2String(data.getBatlv()));
         if (data.getBatlv() <= 5) {
             getBatlvLabel(unit).setBackground(new Color(255, 97, 95));
         } else if (data.getBatlv() <= 6) {
@@ -664,4 +666,6 @@ public class AbcUnitView extends JPanel {
             getBatlvLabel(unit).setBackground(colorB);
         }
     }
+
+
 }

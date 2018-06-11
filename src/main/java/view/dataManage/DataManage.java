@@ -19,6 +19,7 @@ import mytools.Check2SPinner;
 import mytools.ClickButton;
 import mytools.ChangeButton;
 import mytools.MyTCR;
+import mytools.MyTCR2;
 import mytools.MyToolPanel;
 import mytools.MyUtil;
 import service.*;
@@ -593,7 +594,7 @@ public class DataManage extends JPanel {
         this.tablePanel = new JPanel();
         this.tablePanel.setLayout(new BorderLayout());
         table = new JTable();
-        this.initializeTable();// 初始化表格
+//        this.initializeTable();// 初始化表格
 
         // 将JTable添加到滚动面板中
         JScrollPane scrollPane = new JScrollPane(table);
@@ -631,6 +632,32 @@ public class DataManage extends JPanel {
         table.setRowHeight(MyUtil.RowHeight);// 设置行高
 
     }
+    private void initializeTable2() {
+    	MyTCR2 tcr = new MyTCR2();
+    	table.setDefaultRenderer(String.class, tcr);
+    	table.setDefaultRenderer(Number.class, tcr);
+    	table.setDefaultRenderer(Float.class, tcr);
+    	table.setDefaultRenderer(Double.class, tcr);
+    	table.setDefaultRenderer(Date.class, tcr);
+    	
+    	// 表头设置
+    	JTableHeader tableHeader = table.getTableHeader();
+    	DefaultTableCellRenderer dtcr = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
+    	dtcr.setHorizontalAlignment(SwingConstants.CENTER);// 表头居中
+    	Dimension dimension = dtcr.getSize();
+    	dimension.height = MyUtil.HeadHeight;
+    	dtcr.setPreferredSize(dimension);// 设置表头高度
+    	tableHeader.setDefaultRenderer(dtcr);
+    	// 表头不可拖动
+    	tableHeader.setReorderingAllowed(false);
+    	// 列宽不可修改
+    	tableHeader.setResizingAllowed(false);
+    	
+    	// 自动排序
+    	table.setAutoCreateRowSorter(true);
+    	table.setRowHeight(MyUtil.RowHeight);// 设置行高
+    	
+    }
 
     /**
      * 获取查询条件
@@ -657,8 +684,14 @@ public class DataManage extends JPanel {
             case SensorService.Sensor_HITCH:
             	para.setUnitType((byte) 4);
             	break;
-                
         }
+        switch (type) {
+        case SensorService.Sensor_SF6:
+        	initializeTable2();
+            break;
+            default :initializeTable();
+        	break;
+    }
         //system.out.println("type:" + para.getUnitType());
         int sjbhIdenx = jcbPlace.getSelectedIndex();
         String place = null;
@@ -698,9 +731,9 @@ public class DataManage extends JPanel {
                 jcbPlace.addItem(sjbh);
             }
         }
-        if (type.equals(SensorService.Sensor_WD)) {
-            jcbPlace.addItem("环境温度");
-        }
+//        if (type.equals(SensorService.Sensor_WD)) {
+//            jcbPlace.addItem("环境温度");
+//        }
         jcbXW.setSelectedIndex(0);
     }
 

@@ -54,6 +54,14 @@ public class DataService {
         MyDbUtil.batchData(sqlInsert, datasV);
     }
 
+    public static void saveValidCollData(List<DataBean> datas) throws SQLException {
+        Vector<Vector<Object>> datasV = new Vector<Vector<Object>>();
+        for (DataBean data : datas) {
+            datasV.add(data.getSqlData());
+        }
+        MyDbUtil.batchData(sqlValidInsert, datasV);
+    }
+
 
     public static void saveCollData(DataBean data) throws SQLException {
         MyDbUtil.update(sqlInsert, data.getSqlData().toArray());

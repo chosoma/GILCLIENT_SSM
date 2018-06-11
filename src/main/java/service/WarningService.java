@@ -52,7 +52,7 @@ public class WarningService {
         return MyDbUtil.queryTableData(stringBuilder.toString(), p.toArray());
     }
 
-    public static CountBean getTableWarnCount( DataSearchPara para) throws SQLException {
+    public static CountBean getTableWarnCount(DataSearchPara para) throws SQLException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("SELECT count(*) as count from\n")
@@ -78,6 +78,14 @@ public class WarningService {
 
     public static void saveWarn(WarnBean warnBean) throws SQLException {
         MyDbUtil.update(sqlInsert, warnBean.getSqlData().toArray());
+    }
+
+    public static void saveCollWarn(List<WarnBean> warnBeans) throws SQLException {
+        Vector<Vector<Object>> datasV = new Vector<Vector<Object>>();
+        for (WarnBean data : warnBeans) {
+            datasV.add(data.getSqlData());
+        }
+        MyDbUtil.batchData(sqlInsert, datasV);
     }
 
     public static void deleteWarn(Map<WarnBean, List<Date>> dataBeanListMap) throws SQLException {

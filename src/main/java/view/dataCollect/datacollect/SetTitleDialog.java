@@ -5,6 +5,7 @@ import mytools.ClickButton;
 import service.SensorService;
 import service.PointService;
 import view.dataCollect.datacollect.ChartView;
+import view.dataCollect.graph.GraphView;
 import view.icon.CloseIcon;
 import view.systemSetup.SystemSetup;
 

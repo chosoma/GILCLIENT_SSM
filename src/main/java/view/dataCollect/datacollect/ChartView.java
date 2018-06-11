@@ -145,6 +145,7 @@ public class ChartView extends JPanel {
                 panelWd.setTitle(pointBean);
                 break;
         }
+        panelGraph.setTitle(pointBean);
     }
 
 

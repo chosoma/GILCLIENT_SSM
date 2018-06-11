@@ -33,13 +33,15 @@ public class UnitIcon extends JLabel {
     private Color buttonColor = new Color(240, 240, 240);
     private LadderFrame ladderFrame;
 
-    JPanel getjPanel() {
+    UnitABCPanel getjPanel() {
         return panel;
     }
 
+
+
     public UnitIcon(final PointBean pointBean) {
-        initTimer();
-        panel = new UnitABCPanel();
+//        initTimer();
+        panel = new UnitABCPanel(pointBean);
         this.setBackground(buttonColor);
         this.pointBean = pointBean;
         switch (pointBean.getUnitType()) {

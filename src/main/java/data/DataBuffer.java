@@ -76,9 +76,9 @@ public class DataBuffer {
 
             lock.lock();
             try {
-            	
+
 //            	int count = 0;
-            	
+
                 while (alive) {
                     // 判断缓冲区数据是否达到最小数据长度
                     if (buffer.size() == 0) {
@@ -89,6 +89,7 @@ public class DataBuffer {
                             // 判断缓冲区数据是否达到最小数据长度,如果没有则线程休眠
                             if (buffer.size() == 0) {
                                 factory.saveData();// 数据存储
+//                                factory.saveWarning();
                                 con.await();//很关键
                             }
                             continue;

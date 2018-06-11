@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
-public class LadderFrame extends JFrame {
+public class LadderFrame extends JDialog {
 
     private List<UnitBean> unitBeanList;
 
@@ -46,6 +46,7 @@ public class LadderFrame extends JFrame {
     private JPanel centerPanel;
 
     public LadderFrame(PointBean pointBean) {
+        this.setAlwaysOnTop(true);
         this.pointBean = pointBean;
         this.setTitle(pointBean.getPlace());
         this.setIconImages(DefaultUI.icons);
@@ -84,6 +85,14 @@ public class LadderFrame extends JFrame {
             }
         });
 
+//        this.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                if(e.getSource() instanceof LadderFrame){
+//                    ((LadderFrame) e.getSource()).setAlwaysOnTop(true);
+//                }
+//            }
+//        });
 //        maxrec = Shell.getInstance().getMaxBounds();
         initshow();
         initwait();

@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -47,9 +49,11 @@ public class CollectShow extends JPanel {
         layout = new GridLayout(0, 1);
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
+        initTimer();
         this.loadView();
         this.initbutton();
     }
+
     private JPanel buttonPanel;
 
     public void myButtonGroup(int type, String name) {
@@ -73,16 +77,17 @@ public class CollectShow extends JPanel {
             ChartView.getInstance().showPane(name);
         }
     }
+
     private void initbutton() {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.white);
-        buttonPanel.setPreferredSize(new Dimension(70,getWidth()));
+        buttonPanel.setPreferredSize(new Dimension(70, getWidth()));
         buttonPanel.setLayout(new FlowLayout());
 //        buttonPanel.setOpaque(false);
         this.add(buttonPanel, BorderLayout.WEST);
 
         Dimension buttonsize = new Dimension(60, 60);
-        JButton jbSF6 = new CollectTitleButton("六氟化硫",new MinIcon(MyIconFactory.SF6_28));
+        JButton jbSF6 = new CollectTitleButton("六氟化硫", new MinIcon(MyIconFactory.SF6_28));
         jbSF6.setPreferredSize(buttonsize);
         jbSF6.setSelected(true);
         jbSF6.addActionListener(new ActionListener() {
@@ -103,7 +108,7 @@ public class CollectShow extends JPanel {
         });
         buttonPanel.add(jbWd);
 
-        JButton jbGy = new CollectTitleButton("伸缩节",new MinIcon(MyIconFactory.vari_28));
+        JButton jbGy = new CollectTitleButton("伸缩节", new MinIcon(MyIconFactory.vari_28));
         jbGy.setPreferredSize(buttonsize);
         jbGy.addActionListener(new ActionListener() {
             @Override
@@ -113,7 +118,7 @@ public class CollectShow extends JPanel {
         });
         buttonPanel.add(jbGy);
 
-        JButton jbSw = new CollectTitleButton("图形",new MinIcon(MyIconFactory.ladder_28));
+        JButton jbSw = new CollectTitleButton("图形", new MinIcon(MyIconFactory.ladder_28));
         jbSw.setPreferredSize(buttonsize);
         jbSw.addActionListener(new ActionListener() {
             @Override
@@ -123,7 +128,7 @@ public class CollectShow extends JPanel {
         });
         buttonPanel.add(jbSw);
 
-        JButton jbHit = new CollectTitleButton("故障定位",new MinIcon(MyIconFactory.warn_28));
+        JButton jbHit = new CollectTitleButton("故障定位", new MinIcon(MyIconFactory.warn_28));
         jbHit.setPreferredSize(buttonsize);
         jbHit.addActionListener(new ActionListener() {
             @Override
@@ -156,6 +161,7 @@ public class CollectShow extends JPanel {
 
     }
 
+
     private List<WarnPanel> warnPanels = new ArrayList<>();
 
 
@@ -171,6 +177,39 @@ public class CollectShow extends JPanel {
     private void removeWarn(WarnPanel warnPanel) {
         this.warnPanel.remove(warnPanel);
         warnPanels.remove(warnPanel);
+    }
+
+
+    private int index;
+    //    private boolean flag = true;
+    private Color colorWarn = new Color(255, 80, 0);
+    private Color buttonColor = new Color(240, 240, 240);
+
+    private void initTimer() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+//                if (flag) {
+                index++;
+                if (index % 2 == 0) {
+                    setColor(buttonColor);
+                } else {
+                    setColor(colorWarn);
+                }
+//                } else {
+//setColor(colorWarn);
+//                }
+
+            }
+        };
+        java.util.Timer timer = new Timer();
+        timer.schedule(task, 0, 500);
+    }
+
+    private void setColor(Color color) {
+        for (WarnPanel show : warnPanels) {
+            show.setBackground(color);
+        }
     }
 
 
@@ -201,7 +240,7 @@ public class CollectShow extends JPanel {
         this.repaint();
     }
 
-    
+
     public synchronized void receInitTemp(DataBean data) {
         chartView.receInitTemp(data);
     }

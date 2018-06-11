@@ -1,6 +1,7 @@
 package view.dataCollect.hitch;
 
 import com.Configure;
+import data.DataFactory;
 import domain.DataBean;
 import domain.IconConfig;
 import domain.UnitBean;
@@ -142,12 +143,13 @@ public class HitchView extends JPanel {
                 warnBean.setInfo("发生故障--故障值:" + String.valueOf(hitchBean.getHitchvol()));
                 hitchicon.setHitchValue(String.valueOf(hitchBean.getHitchvol()));
                 CollectShow.getInstance().addWarning(warnBean);
-                try {
-					WarningService.saveWarn(warnBean);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                DataFactory.getInstance().addWarning(warnBean);
+//                try {
+//					WarningService.saveWarn(warnBean);
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
                 Shell.getInstance().showHitch();
             }
         }

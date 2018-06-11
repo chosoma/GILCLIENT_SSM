@@ -94,9 +94,9 @@ public class Shell extends JFrame implements ActionListener {
         this.setUndecorated(true);// 去除边框修饰
          AWTUtilities.setWindowOpaque(this, false);// 设置透明
         this.setSize(dimension);
-//		this.setLocationRelativeTo(null);
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(d.width, d.height);
+		this.setLocationRelativeTo(null);
+//        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+//        this.setSize(d.width, d.height);
         CardLayout contentCard = new CardLayout();
         JPanel contentPane = new JPanel(contentCard);
         contentPane.setBorder(BorderFactory.createLineBorder(new Color(44, 46, 54)));
@@ -456,6 +456,7 @@ public class Shell extends JFrame implements ActionListener {
                     }
                 }
                 centerCard.show(centerPanel, temp.getText());
+//                Shell.getInstance().setAlwaysOnTop(true);
             }
         } else if (e.getSource() instanceof MySkipButton) {
             MySkipButton temp = (MySkipButton) e.getSource();

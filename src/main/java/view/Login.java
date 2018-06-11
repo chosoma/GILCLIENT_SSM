@@ -181,7 +181,7 @@ public class Login extends JFrame {
 //                        CollectOperate.getInstance().hiddenUser();
                         WarnManage.getInstance().hiddenUser();
                     }
-                    Shell.getInstance().enableWindow(false);
+//                    Shell.getInstance().enableWindow(false);
                     Shell.getInstance().setVisible(true);
                     CollectService.OpenColl1();
 //                    WinEventInterceptor.setKeyDisable(true);

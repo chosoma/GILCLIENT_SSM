@@ -78,7 +78,7 @@ public class WarnPanel extends JPanel {
 
 //        CollectShow.getInstance().addWarning(this);
 //        ChartView.getInstance().startWarn(warnBean);
-        initTimer();
+//        initTimer();
     }
 
     private String getWarnInfo() {
