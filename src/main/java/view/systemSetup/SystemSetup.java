@@ -1,10 +1,8 @@
 package view.systemSetup;
 
-import domain.PointBean;
 import mytools.MyPanel;
 import mytools.MyUtil;
 import service.UserService;
-import view.dataManage.DataManage;
 import view.systemSetup.systemSetupComptents.*;
 
 import javax.swing.*;

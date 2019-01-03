@@ -3,20 +3,21 @@ package view.dataCollect.datacollect;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import com.LogServer;
 import domain.WarnBean;
 import mytools.CollectTitleButton;
 import mytools.MyUtil;
 
 import domain.DataBean;
+import service.CollectService;
 import view.dataCollect.WarnPanel;
 import view.icon.*;
 
@@ -162,7 +163,7 @@ public class CollectShow extends JPanel {
     }
 
 
-    private List<WarnPanel> warnPanels = new ArrayList<>();
+    private Vector<WarnPanel> warnPanels = new Vector<>();
 
 
     private synchronized WarnPanel getWarn(WarnBean warnBean) {
@@ -189,17 +190,20 @@ public class CollectShow extends JPanel {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                try {
 //                if (flag) {
-                index++;
-                if (index % 2 == 0) {
-                    setColor(buttonColor);
-                } else {
-                    setColor(colorWarn);
-                }
+                    index++;
+                    if (index % 2 == 0) {
+                        setColor(buttonColor);
+                    } else {
+                        setColor(colorWarn);
+                    }
 //                } else {
 //setColor(colorWarn);
 //                }
-
+                } catch (Exception e) {
+                    LogServer.logError(CollectShow.class, e);
+                }
             }
         };
         java.util.Timer timer = new Timer();
@@ -262,7 +266,8 @@ public class CollectShow extends JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         int w = getWidth(), h = getHeight();
-        Color c1 = new Color(242, 242, 242), c2 = Color.WHITE;
+        Color c1 = new Color(242, 242, 242),
+                c2 = Color.WHITE;
         g2.setPaint(new GradientPaint(0, 0, c1, 0, 250, c2));
         g2.fillRect(0, 0, w, 250);
         g2.setColor(c2);

@@ -181,6 +181,7 @@ public class Login extends JFrame {
 //                        CollectOperate.getInstance().hiddenUser();
                         WarnManage.getInstance().hiddenUser();
                     }
+                    //登录成功设置任务栏不可用
 //                    Shell.getInstance().enableWindow(false);
                     Shell.getInstance().setVisible(true);
                     CollectService.OpenColl1();

@@ -26,27 +26,27 @@ public class DefaultUI {
         this.setBorder();
         this.setIcon();
         // 菜单栏美化
-        UIManager.put("ScrollBarUI", "mytools.myScrollBar.MyScrollBarUI");
-        UIManager.put("ScrollBar.width", 6);
-        UIManager.put("PopupMenuUI", "mytools.menu.MyPopupMenuUI");
-        UIManager.put("MenuItemUI", "mytools.menu.MyMenuItemUI");
-        UIManager.put("MenuUI", "mytools.menu.MyMenuUI");
+//        UIManager.put("ScrollBarUI", "mytools.myScrollBar.MyScrollBarUI");
+//        UIManager.put("ScrollBar.width", 6);
+//        UIManager.put("PopupMenuUI", "mytools.menu.MyPopupMenuUI");
+//        UIManager.put("MenuItemUI", "mytools.menu.MyMenuItemUI");
+//        UIManager.put("MenuUI", "mytools.menu.MyMenuUI");
         UIManager.put("ComboBoxUI", "mytools.myComboBox.MyComboBoxUI");
-        // UIManager.put("ButtonUI", "mytools.MyButtonUI");
-        UIManager.put("FileChooserUI", "mytools.MyFileChooserUI");
-        UIManager.put("TableHeaderUI", "mytools.MyTableHeaderUI");
-        UIManager.put("TabbedPaneUI", "mytools.MyTabbedPaneUI");
-//        UIManager.put("SplitPaneUI", "mytools.mySplitPane.MySplitPaneUI");
-//        UIManager.put("SplitPaneDivider.border", BorderFactory.createEmptyBorder());
-//        UIManager.put("SplitPane.dividerSize", 9);
-        UIManager.put("TableHeader.cellBorder", BorderFactory.createEmptyBorder());
-
-        UIManager.put("CheckBoxMenuItemUI", "mytools.menu.MyCheckBoxMenuItemUI");
-
-        UIManager.put("RadioButtonMenuItemUI", "mytools.menu.MyRadioButtonMenuItemUI");
-
-        // 设置按钮的enter键触发
-        UIManager.put("Button.focusInputMap", new UIDefaults.LazyInputMap(new Object[]{"ENTER", "pressed", "released ENTER", "released"}));
+//        // UIManager.put("ButtonUI", "mytools.MyButtonUI");
+//        UIManager.put("FileChooserUI", "mytools.MyFileChooserUI");
+//        UIManager.put("TableHeaderUI", "mytools.MyTableHeaderUI");
+//        UIManager.put("TabbedPaneUI", "mytools.MyTabbedPaneUI");
+////        UIManager.put("SplitPaneUI", "mytools.mySplitPane.MySplitPaneUI");
+////        UIManager.put("SplitPaneDivider.border", BorderFactory.createEmptyBorder());
+////        UIManager.put("SplitPane.dividerSize", 9);
+//        UIManager.put("TableHeader.cellBorder", BorderFactory.createEmptyBorder());
+//
+//        UIManager.put("CheckBoxMenuItemUI", "mytools.menu.MyCheckBoxMenuItemUI");
+//
+//        UIManager.put("RadioButtonMenuItemUI", "mytools.menu.MyRadioButtonMenuItemUI");
+//
+//        // 设置按钮的enter键触发
+//        UIManager.put("Button.focusInputMap", new UIDefaults.LazyInputMap(new Object[]{"ENTER", "pressed", "released ENTER", "released"}));
 
     }
 

@@ -115,7 +115,7 @@ public class Index {
         login.loading(40, "Loading DataManagerment... ...");
 
         shell.addItem(DataManage.getInstance(), new ImageIcon("images/main/manage_24.png"), "数据管理");
-        shell.addItem(DataValidManage.getInstance(), new ImageIcon("images/main/manage_24.png"), "无效数据");
+//        shell.addItem(DataValidManage.getInstance(), new ImageIcon("images/main/manage_24.png"), "无效数据");
 
         login.loading(50, "Loading WarnManagerment... ...");
         shell.addItem(WarnManage.getInstance(), new ImageIcon("images/main/warn_24.png"), "警报查询");

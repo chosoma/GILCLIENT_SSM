@@ -91,7 +91,7 @@ public class ChartView extends JPanel {
     }
 
     public void removeWarning(WarnBean warnBean) {
-        panelGraph.removeWarning(warnBean);
+//        panelGraph.removeWarning(warnBean);
         panelHitch.removeWarning(warnBean);
     }
 

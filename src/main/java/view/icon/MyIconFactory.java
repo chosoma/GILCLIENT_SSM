@@ -114,7 +114,7 @@ public class MyIconFactory {
 
     static {
         try {
-            System.out.println(MyIconFactory.class.getClassLoader().getResource(""));
+//            System.out.println(MyIconFactory.class.getClassLoader().getResource(""));
             sound_16 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/sound_16.png"));
             sound_muted_16 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/sound_muted_16.png"));
             showDebug_16 = ImageIO.read(MyIconFactory.class.getClassLoader().getResource("icon/showDebug_16.png"));

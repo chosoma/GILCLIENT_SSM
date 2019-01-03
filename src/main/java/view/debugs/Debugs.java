@@ -135,19 +135,6 @@ public class Debugs extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(jta);
         this.add(scrollPane, BorderLayout.CENTER);
-
-//        java.util.Timer timer = new java.util.Timer();
-//        TimerTask timerTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                int length = jta.getText().length();
-//                int start = (int) (Math.random() * length);
-//                int end = start + (int) (Math.random() * (length - start));
-//                jta.replaceRange("", start, end);
-//            }
-//        };
-//        timer.schedule(timerTask, 0, 1000);
-
     }
 
     public synchronized void rec(byte[] data, int len, Date time, String msg) {

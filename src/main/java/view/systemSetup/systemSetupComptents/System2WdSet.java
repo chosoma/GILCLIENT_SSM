@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.Configure;
-import mytools.ChangeButton;
+import mytools.EditButton;
 import mytools.MyUtil;
 
 import domain.WdPeriod;
@@ -137,7 +137,7 @@ public class System2WdSet extends JPanel {
 
 		Dimension buttonSize = new Dimension(60, 30);
 
-		edit = new ChangeButton("修改", new ImageIcon("images/edit.png"));
+		edit = new EditButton("修改", new ImageIcon("images/edit.png"));
 		edit.setPreferredSize(buttonSize);
 		edit.addActionListener(new ActionListener() {
 			@Override
@@ -153,7 +153,7 @@ public class System2WdSet extends JPanel {
 		});
 		toolbar.add(edit);
 
-		apply = new ChangeButton("应用", new ImageIcon("images/apply.png"));
+		apply = new EditButton("应用", new ImageIcon("images/apply.png"));
 		apply.setToolTipText("保存修改，并应用");
 		apply.setName("apply");
 		apply.setPreferredSize(buttonSize);
@@ -189,7 +189,7 @@ public class System2WdSet extends JPanel {
 		});
 		toolbar.add(apply);
 
-		cancel = new ChangeButton("取消", new ImageIcon("images/cancel.png"));
+		cancel = new EditButton("取消", new ImageIcon("images/cancel.png"));
 		cancel.setEnabled(false);
 		cancel.setPreferredSize(buttonSize);
 		cancel.addActionListener(new ActionListener() {

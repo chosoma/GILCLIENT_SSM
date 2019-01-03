@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,9 +11,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jxl.Cell;
@@ -24,6 +24,8 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class MyExcelUtil {
     static JFileChooser fileChooser;
@@ -38,6 +40,8 @@ public class MyExcelUtil {
         // 添加Excel过滤器
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(
                 "Excel表格(*.xls)", "xls"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(
+                "(*.art)", "art"));
     }
 
     public static void Export2Excel(JTable table, String sheetName)
@@ -195,4 +199,15 @@ public class MyExcelUtil {
         }
         return paras;
     }
+
+    public static void main(String[] args) {
+        System.out.println(MyExcelUtil.class.getClassLoader().getResource(""));
+        try {
+            Import4Excel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

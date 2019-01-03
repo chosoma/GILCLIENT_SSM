@@ -21,7 +21,7 @@ public class SetWarnDialog extends JDialog {
 	public SetWarnDialog(UnitBean unit) {
 		unitBean = unit;
 
-		System.out.println(unit);
+//		System.out.println(unit);
 		initDefault();
 	}
 

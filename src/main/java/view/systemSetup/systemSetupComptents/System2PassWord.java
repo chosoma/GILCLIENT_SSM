@@ -14,8 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
-import mytools.ChangeButton;
-import mytools.ClickButton;
+import mytools.EditButton;
 import mytools.MyUtil;
 import service.UserService;
 
@@ -45,7 +44,7 @@ public class System2PassWord extends JPanel {
 
         Dimension buttonSize = new Dimension(60, 30);
 
-        edit = new ChangeButton("修改", new ImageIcon("images/edit.png"));
+        edit = new EditButton("修改", new ImageIcon("images/edit.png"));
         edit.setPreferredSize(buttonSize);
         edit.addActionListener(new ActionListener() {
             @Override
@@ -56,7 +55,7 @@ public class System2PassWord extends JPanel {
         toolbar.add(edit);
 
 
-        cancel = new ChangeButton("退出", new ImageIcon("images/cancel.png"));
+        cancel = new EditButton("退出", new ImageIcon("images/cancel.png"));
         cancel.setPreferredSize(buttonSize);
         cancel.addActionListener(new ActionListener() {
             @Override

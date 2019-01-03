@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import mytools.ChangeButton;
+import mytools.EditButton;
 import mytools.MyUtil;
 import service.UserService;
 import view.ModifiedFlowLayout;
@@ -71,7 +71,7 @@ public class System2User extends JPanel {
         Dimension buttonSize = new Dimension(60, 30);
 
         //添加用户:展开"添加用户"面板,执行添加操作
-        JButton addUser = new ChangeButton("添加", new ImageIcon("images/add.png"));
+        JButton addUser = new EditButton("添加", new ImageIcon("images/add.png"));
         addUser.setToolTipText("添加用户");
         addUser.setPreferredSize(buttonSize);
         addUser.addActionListener(new ActionListener() {
@@ -83,7 +83,7 @@ public class System2User extends JPanel {
         toolPane.add(addUser);
 
         //更改用户类型:修改用户权限，对用户进行管理员与普通用户的切换
-        JButton changeUser = new ChangeButton("更改", new ImageIcon("images/change.png"));
+        JButton changeUser = new EditButton("更改", new ImageIcon("images/change.png"));
         changeUser.setToolTipText("更改用户类型");
         changeUser.setName("更改");
         changeUser.setPreferredSize(buttonSize);
@@ -120,7 +120,7 @@ public class System2User extends JPanel {
         toolPane.add(changeUser);
 
         //删除用户:将用户删除
-        JButton deleteUser = new ChangeButton("删除", new ImageIcon("images/delete.png"));
+        JButton deleteUser = new EditButton("删除", new ImageIcon("images/delete.png"));
         deleteUser.setName("删除");
         deleteUser.setToolTipText("删除用户");
         deleteUser.setPreferredSize(buttonSize);
@@ -153,7 +153,7 @@ public class System2User extends JPanel {
         toolPane.add(deleteUser);
 
         // 刷新用户列表:刷新系统内所有用户，刷新用户列表
-        refreshUser = new ChangeButton("刷新", new ImageIcon("images/refresh.png"));
+        refreshUser = new EditButton("刷新", new ImageIcon("images/refresh.png"));
         refreshUser.setName("刷新");
         refreshUser.setToolTipText("刷新用户列表");
         refreshUser.setPreferredSize(buttonSize);
@@ -198,7 +198,7 @@ public class System2User extends JPanel {
         jcb.setPreferredSize(new Dimension(80, 20));
         bottomPane.add(jcb);
 
-        JButton apply = new ChangeButton("确认", new ImageIcon("images/apply.png"));
+        JButton apply = new EditButton("确认", new ImageIcon("images/apply.png"));
         apply.setName("确认");
         apply.setToolTipText("确认");
         apply.setPreferredSize(buttonSize);
@@ -249,7 +249,7 @@ public class System2User extends JPanel {
         });
         bottomPane.add(apply);
 
-        JButton cancel = new ChangeButton("取消", new ImageIcon("images/cancel.png"));
+        JButton cancel = new EditButton("取消", new ImageIcon("images/cancel.png"));
         cancel.setToolTipText("取消添加操作");
         cancel.setPreferredSize(buttonSize);
         cancel.addActionListener(new ActionListener() {

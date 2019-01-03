@@ -14,6 +14,7 @@ public abstract class DataManageModel extends DefaultTableModel {
 
     protected void initDefault() {
         row = new Vector<Vector<Object>>();
+
     }
 
     /**

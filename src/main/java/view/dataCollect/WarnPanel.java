@@ -1,7 +1,7 @@
 package view.dataCollect;
 
 import domain.WarnBean;
-import mytools.ChangeButton;
+import mytools.EditButton;
 import service.WarningService;
 import view.dataCollect.datacollect.ChartView;
 import view.dataCollect.datacollect.CollectShow;
@@ -47,7 +47,7 @@ public class WarnPanel extends JPanel {
         this.add(warnlabel);
 
 
-        JButton jb = new ChangeButton("解除警报", new ImageIcon("images/delete.png"));
+        JButton jb = new EditButton("解除警报", new ImageIcon("images/delete.png"));
         jb.setOpaque(true);
         this.add(jb, BorderLayout.EAST);
 
@@ -82,8 +82,7 @@ public class WarnPanel extends JPanel {
     }
 
     private String getWarnInfo() {
-        StringBuilder sb = new StringBuilder();
-//        switch (warnBean.getPointBean().getUnitType()) {
+        //        switch (warnBean.getPointBean().getUnitType()) {
 //            case 1:
 //                sb.append("监测类型:SF6,");
 //                break;
@@ -95,15 +94,14 @@ public class WarnPanel extends JPanel {
 //                break;
 //
 //        }
-        sb.append("监测点:");
-        sb.append(warnBean.getPointBean().getPlace());
-        sb.append(",相位:");
-        sb.append(warnBean.getXw());
-        sb.append(",");
-        sb.append(warnBean.getInfo());
-        sb.append(" 时间:");
-        sb.append(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(warnBean.getDate()));
-        return sb.toString();
+        return "监测点:" +
+                warnBean.getPointBean().getPlace() +
+                ",相位:" +
+                warnBean.getXw() +
+                "," +
+                warnBean.getInfo() +
+                " 时间:" +
+                new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(warnBean.getDate());
     }
 
     public void resetWarn(WarnBean warnBean) {

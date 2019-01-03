@@ -17,7 +17,7 @@ import domain.*;
 import model.DataManageModel;
 import mytools.Check2SPinner;
 import mytools.ClickButton;
-import mytools.ChangeButton;
+import mytools.EditButton;
 import mytools.MyTCR;
 import mytools.MyTCR2;
 import mytools.MyToolPanel;
@@ -333,7 +333,7 @@ public class DataManage extends JPanel {
 
         Dimension buttonSize = new Dimension(34, 32);
 
-        delete = new ChangeButton(new ImageIcon("images/delete.png"));
+        delete = new EditButton(new ImageIcon("images/delete.png"));
         delete.setToolTipText("删除选中的数据");
         delete.setPreferredSize(buttonSize);
         delete.addActionListener(new ActionListener() {
@@ -384,7 +384,7 @@ public class DataManage extends JPanel {
         });
         toolBarR.add(delete);
 
-        clear = new ChangeButton(new ImageIcon("images/clear_24.png"));
+        clear = new EditButton(new ImageIcon("images/clear_24.png"));
         clear.setToolTipText("清空表中数据");
         clear.setPreferredSize(buttonSize);
         clear.addActionListener(new ActionListener() {
@@ -423,7 +423,7 @@ public class DataManage extends JPanel {
         });
         toolBarR.add(clear);
 
-        JButton export = new ChangeButton(new ImageIcon("images/database_download_24.png"));
+        JButton export = new EditButton(new ImageIcon("images/database_download_24.png"));
         export.setToolTipText("将表中数据下载到Excel");
         export.setPreferredSize(buttonSize);
         export.addActionListener(new ActionListener() {
@@ -446,7 +446,7 @@ public class DataManage extends JPanel {
         });
         toolBarR.add(export);
 
-        JButton print = new ChangeButton(new ImageIcon("images/printer_24.png"));
+        JButton print = new EditButton(new ImageIcon("images/printer_24.png"));
         print.setToolTipText("打印表格");
         print.setPreferredSize(buttonSize);
         print.addActionListener(new ActionListener() {

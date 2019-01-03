@@ -2,17 +2,13 @@ package view.systemSetup.systemSetupComptents;
 
 import com.CollectServer;
 import domain.UnitBean;
-import mytools.ClickButton;
-import mytools.ChangeButton;
+import mytools.EditButton;
 import mytools.MyUtil;
 import service.CollectService;
 import service.PointService;
 import service.UnitService;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -170,7 +166,7 @@ public class System2Period extends JPanel {
 
         Dimension buttonSize = new Dimension(60, 30);
 
-        edit = new ChangeButton("修改", new ImageIcon("images/edit.png"));
+        edit = new EditButton("修改", new ImageIcon("images/edit.png"));
         edit.setToolTipText("修改连接设置");
         edit.setPreferredSize(buttonSize);
         edit.addActionListener(new ActionListener() {
@@ -189,7 +185,7 @@ public class System2Period extends JPanel {
         });
         toolbar.add(edit);
 
-        set = new ChangeButton("设置", new ImageIcon("images/set.png"));
+        set = new EditButton("设置", new ImageIcon("images/set.png"));
         set.setToolTipText("设置");
         set.setEnabled(false);
         set.setPreferredSize(buttonSize);
@@ -201,7 +197,7 @@ public class System2Period extends JPanel {
         });
         toolbar.add(set);
 
-        cancel = new ChangeButton("退出", new ImageIcon("images/cancel.png"));
+        cancel = new EditButton("退出", new ImageIcon("images/cancel.png"));
         cancel.setToolTipText("退出修改");
         cancel.setEnabled(false);
         cancel.setPreferredSize(buttonSize);

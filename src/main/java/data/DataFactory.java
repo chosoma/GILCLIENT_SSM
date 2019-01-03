@@ -2,9 +2,11 @@ package data;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.LogServer;
 import domain.*;
 import protocol.Protocol;
 import service.*;
@@ -12,6 +14,7 @@ import view.dataCollect.datacollect.AbcUnitView;
 import view.dataCollect.datacollect.CollectShow;
 
 public class DataFactory {
+
     private List<DataBean> dataList = new ArrayList<DataBean>();
     private List<DataBean> validdataList = new ArrayList<DataBean>();
     private List<WarnBean> warnList = new ArrayList<>();
@@ -49,6 +52,8 @@ public class DataFactory {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            System.gc();
         }
     }
 
@@ -159,9 +164,11 @@ public class DataFactory {
 //                e.printStackTrace();
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 System.out.println("数据长度不足");
+                LogServer.logError(DataFactory.class, aioobe);
                 aioobe.printStackTrace();
             }
         }
+        System.gc();
 
     }
 
@@ -206,28 +213,33 @@ public class DataFactory {
             temp = 0;
         }
         dataBean.setTemp(temp);
-//		UnitBean unitBean = UnitService.getUnitBean(dataBean.getUnitType(), dataBean.getUnitNumber());
-//		if (temp > 20) {
-//			if (unitBean.isTempflag()) {
-//				// 触发高温,已发送高温周期
-//				return;
-//			} else {
-//				// 触发高温,未发送高温周期
-//				unitBean.setTempflag(true);
-//				// 触发发送周期
-//				CollectService.setWarnTempPeriod(unitBean);
-//			}
-//		} else {
-//			if (unitBean.isTempflag()) {
-//				// 未触发高温报警,已发送高温周期
-//				unitBean.setTempflag(false);
-//				// 触发发送周期
-//				CollectService.setWarnTempPeriod(unitBean);
-//			} else {
-//				// 未触发高温报警,未发送高温周期
-//				return;
-//			}
-//		}
+
+
+        UnitBean unitBean = UnitService.getUnitBean(dataBean.getUnitType(), dataBean.getUnitNumber());
+        if (unitBean == null) return;
+        if (temp > 20) {
+            if (unitBean.isTempflag()) {
+                // 触发高温,已发送高温周期
+                return;
+            } else {
+                // 触发高温,未发送高温周期
+                unitBean.setTempflag(true);
+                // 触发发送周期
+//                CollectService.setWarnTempPeriod(unitBean); //default
+                CollectService.setWarnTempPeriod2(unitBean); //2018/612
+            }
+        } else {
+            if (unitBean.isTempflag()) {
+                // 未触发高温报警,已发送高温周期
+                unitBean.setTempflag(false);
+                // 触发发送周期
+//                CollectService.setWarnTempPeriod(unitBean); //default bug
+                CollectService.setWarnTempPeriod2(unitBean); //2018/612
+            } else {
+                // 未触发高温报警,未发送高温周期
+                return;
+            }
+        }
     }
 
     private boolean valueVari(byte[] bytes, DataBean dataBean) {
@@ -237,7 +249,7 @@ public class DataFactory {
     }
 
     private void plusDate(DataBean dataBean) {
-        Date date1 = new Date();
+        Date date1 = Calendar.getInstance().getTime();
         Date date = dataBean.getDate();
         long timelong = date.getTime();
         timelong += 1000;

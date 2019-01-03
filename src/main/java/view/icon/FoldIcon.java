@@ -10,7 +10,6 @@ import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
-import mytools.MyFoldPanel;
 import mytools.MyUtil;
 
 public class FoldIcon implements Icon, Serializable {

@@ -95,6 +95,7 @@ public class Shell extends JFrame implements ActionListener {
          AWTUtilities.setWindowOpaque(this, false);// 设置透明
         this.setSize(dimension);
 		this.setLocationRelativeTo(null);
+        //设置屏幕尺寸
 //        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 //        this.setSize(d.width, d.height);
         CardLayout contentCard = new CardLayout();

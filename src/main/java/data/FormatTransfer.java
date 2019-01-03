@@ -32,7 +32,7 @@ public class FormatTransfer {
 
 	static boolean checkCRC16_X(byte[] bytes) {
 		int crc16 = cal_serv_crc(bytes, 1, bytes.length - 4);
-		System.out.println(Integer.toHexString(crc16));
+		System.out.print("\n校验："+Integer.toHexString(crc16));
 		return (bytes[bytes.length - 2] == (byte) (crc16 & 0xFF))
 				&& (bytes[bytes.length - 3] == (byte) (crc16 >> 8 & 0xFF));
 	}
@@ -69,8 +69,8 @@ public class FormatTransfer {
 			temp = temp | (b[i] & 0xFF) << (8 * i);
 		}
 		Float f = Float.intBitsToFloat(temp);
-		System.out.println(Arrays.toString(b));
-		System.out.println(f);
+		System.out.print(Arrays.toString(b));
+		System.out.print(f);
 		if (Float.isNaN(f)) {
 			return 0f;
 		}
@@ -81,6 +81,7 @@ public class FormatTransfer {
 	public static byte[] float2Bytes(float f) {
 		byte[] bytes = new byte[4];
 		int i = Float.floatToIntBits(f);
+		System.out.println(i);
 		// System.out.println(i);
 		for (int j = 0; j < bytes.length; j++) {
 			bytes[j] = (byte) ((i >> (j * 8)) & 0xff);

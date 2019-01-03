@@ -15,7 +15,7 @@ import domain.UnitBean;
 
 
 /**
- * getway
+ * 服务相关
  */
 
 public class CollectServer {
@@ -165,6 +165,7 @@ public class CollectServer {
         } else {
             UnitBean unitBean = UnitService.getUnitBean(unitType, unitNumber);
             for (int i = 0; i < listST.size(); i++) {
+//                System.out.println("\n"+i);
                 CollectSocket s = listST.get(i);
                 if (s.isUseful()) {
 //                    if (unitBean != null && unitBean.getGatewaytype() == s.getNetType() && unitBean.getGatewaynumber() == s.getNetId()) {
@@ -183,6 +184,9 @@ public class CollectServer {
                 }
             }
         }
+    }
+    public void applyUnitOffline(byte[] bytes) {
+
     }
 
 

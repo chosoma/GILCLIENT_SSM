@@ -79,9 +79,5 @@ public class DataCollect {
 
     }
 
-    private void initButton() {
-    }
 
-    private void initPanel() {
-    }
 }
